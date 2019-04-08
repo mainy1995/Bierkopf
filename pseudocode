@@ -1,0 +1,34 @@
+
+
+
+
+spiel(){
+foreach(karteaufderhand)
+    if(handkarten){}
+        legeHandkarte()
+        berechneSpiel()
+        if(punke>maxpunkte)
+            maxpunkte=punkte;        
+        spiel(n-1)
+    }
+    else
+        return punkte
+}
+
+
+
+
+
+
+spiel(){
+    foreach(Karteinderhand){
+    legeHandkarte();
+        foreach(spieler)
+            allekombinationen()               
+        if(teamstich)
+            return punkte;
+        punkte+=spiel(Handkarten-1)
+        
+    }
+}
+
