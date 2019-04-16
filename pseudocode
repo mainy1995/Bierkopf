@@ -12,7 +12,7 @@ foreach(karteaufderhand)
         spiel(n-1)
     }
     else
-        return punkte
+        return pun
 }
 
 
