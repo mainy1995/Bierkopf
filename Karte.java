@@ -58,11 +58,19 @@ public class Karte {
     werteMap.put(ZAHL.ASS, 11);
   }
 
-  public String get_karte() {
-    return zahlenMap.get(zahl) + farbenMap.get(farbe);
+  public String getKarte() {
+    return getZahl() + getFarbe();
   }
 
-  public String get_trumpf() {
+  public String getFarbe() {
+    return farbenMap.get(farbe);
+  }
+
+  public String getZahl() {
+    return zahlenMap.get(zahl);
+  }
+
+  public String getTrumpf() {
     return Boolean.toString(trumpf);
   }
 

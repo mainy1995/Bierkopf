@@ -1,26 +1,41 @@
 package Bierkopf;
 
 public class Spieler {
-
+  String name;
   Karte[] handkarten;
   Bierkopf bierkopf;
+  boolean trumpfFrei, eichelFrei, blattFrei, schellenfrei;
 
-  public Spieler(Bierkopf _bierkopf) {
-    System.out.println("Konstruktor: Spieler()");
+  public Spieler(Bierkopf _bierkopf, Karte[] _handkarten, String _name) {
+    P.pln();
+    P.pln("Konstruktor: Spieler(" + _name + ")");
+    trumpfFrei = eichelFrei = blattFrei = schellenfrei = true;
+
     bierkopf = _bierkopf;
+    handkarten = _handkarten;
+    name = _name;
 
-    handkarten = new Karte[6];
+    // Ausgabe aller Karten
+    P.pln("(" + name + ") Meine Karten sind:");
+    for (int i = 0; i < handkarten.length; i++) {
+      P.pln(handkarten[i].getKarte() + " " + handkarten[i].getTrumpf());
+    }
   }
 
-  // Auslagerung in Bierkopf-> Teile Karten aus
-  public void teile_Handkarten_aus()
-  {
-    int i = 0;
-    for (i = 0; i < 6; i++) {
-      handkarten[i] = bierkopf.all_cards[i];
-      System.out.print(handkarten[i].get_karte());
+  //nicht ansatzweise
+  public Karte legeKarte() {
+    // nicht rauskommen - also die erste Karte im Stich existiert
+    if (bierkopf.stich.karten[0] != null) {
+      // Trumpf ist gespielt und ich habe einen Trumpf
+      if (bierkopf.stich.karten[0].trumpf && !trumpfFrei) {
+        // Trumpf legen
+      } else {
+        // etc
+      }
     }
-
+    // Karte aus Array entfernen und dennoch mit Return zurückgeben?
+    // dummy
+    return handkarten[0];
   }
 
 }
