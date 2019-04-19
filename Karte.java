@@ -11,24 +11,22 @@ enum ZAHL {
 }
 
 public class Karte {
-  FARBE farbe;
-  ZAHL zahl;
-  int wertigkeit;
-  boolean trumpf;
+  private FARBE farbe;
+  private ZAHL zahl;
+  private boolean trumpf;
 
-  HashMap<ZAHL, String> zahlenMap;
-  HashMap<FARBE, String> farbenMap;
-  HashMap<ZAHL, Integer> werteMap;
+  private HashMap<ZAHL, String> zahlenMap;
+  private HashMap<FARBE, String> farbenMap;
+  private HashMap<ZAHL, Integer> punkteMap;
 
   public Karte(ZAHL _zahl, FARBE _farbe) {
     zahlenMap = new HashMap<ZAHL, String>();
     farbenMap = new HashMap<FARBE, String>();
-    werteMap = new HashMap<ZAHL, Integer>();
+    punkteMap = new HashMap<ZAHL, Integer>();
     initMap();
 
     farbe = _farbe;
     zahl = _zahl;
-    wertigkeit = werteMap.get(_zahl);
 
     if (farbenMap.get(farbe) == "H" || zahlenMap.get(zahl) == "U" || zahlenMap.get(zahl) == "O") {
       trumpf = true;
@@ -50,12 +48,12 @@ public class Karte {
     farbenMap.put(FARBE.HERZ, "H");
     farbenMap.put(FARBE.SCHELLEN, "S");
 
-    werteMap.put(ZAHL.NEUN, 0);
-    werteMap.put(ZAHL.UNTER, 2);
-    werteMap.put(ZAHL.OBER, 3);
-    werteMap.put(ZAHL.KOENIG, 4);
-    werteMap.put(ZAHL.ZEHN, 10);
-    werteMap.put(ZAHL.ASS, 11);
+    punkteMap.put(ZAHL.NEUN, 0);
+    punkteMap.put(ZAHL.UNTER, 2);
+    punkteMap.put(ZAHL.OBER, 3);
+    punkteMap.put(ZAHL.KOENIG, 4);
+    punkteMap.put(ZAHL.ZEHN, 10);
+    punkteMap.put(ZAHL.ASS, 11);
   }
 
   public String getKarte() {
@@ -70,8 +68,12 @@ public class Karte {
     return zahlenMap.get(zahl);
   }
 
-  public String getTrumpf() {
-    return Boolean.toString(trumpf);
+  public int getPunkte() {
+    return punkteMap.get(zahl);
+  }
+
+  public boolean getTrumpf() {
+    return trumpf;
   }
 
 }

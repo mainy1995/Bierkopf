@@ -6,9 +6,9 @@ import java.util.List;
 
 public class Bierkopf {
 
-  List<Karte> alleKarten;
-  Stich stich;
-  Spieler[] spieler;
+  private List<Karte> alleKarten;
+  public Stich stich;
+  public Spieler[] spieler;
 
   public static void main(String[] args) {
     Bierkopf bierkopf = new Bierkopf();
