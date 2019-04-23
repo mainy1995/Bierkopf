@@ -15,6 +15,10 @@ public class P {
     System.out.println(s);
   }
 
+  static void pln(int s) {
+    System.out.println(s);
+  }
+
   static void p(String s) {
     System.out.print(s);
   }
