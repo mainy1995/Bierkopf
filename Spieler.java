@@ -1,26 +1,30 @@
 package Bierkopf;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class Spieler {
 
-  Karte[] handkarten;
-  Bierkopf bierkopf;
-
-  public Spieler(Bierkopf _bierkopf) {
-    System.out.println("Konstruktor: Spieler()");
-    bierkopf = _bierkopf;
-
-    handkarten = new Karte[6];
+  List<Karte> handCards;
+  String name;
+  int position;
+  int punkte;
+  public Spieler(String name, int position) {
+    this.name = name;
+    this.position=position;
+    punkte=0;
+    handCards = new ArrayList<Karte>();
+    System.out.println("Spieler " + name + " erstellt");
   }
 
-  // Auslagerung in Bierkopf-> Teile Karten aus
-  public void teile_Handkarten_aus()
-  {
-    int i = 0;
-    for (i = 0; i < 6; i++) {
-      handkarten[i] = bierkopf.all_cards[i];
-      System.out.print(handkarten[i].get_karte());
-    }
-
+  public void addKarte(Karte newKarte) {
+    handCards.add(newKarte);
   }
 
+  public Karte playKarte() {
+    Karte ret = handCards.get(0);
+    handCards.remove(0);
+    return ret;
+  }
 }
+

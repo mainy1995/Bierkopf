@@ -9,10 +9,10 @@ foreach(karteaufderhand)
         berechneSpiel()
         if(punke>maxpunkte)
             maxpunkte=punkte;        
-        spiel(n-1)
+        return spiel(n-1)
     }
     else
-        return pun
+        return punkte
 }
 
 
