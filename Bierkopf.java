@@ -6,17 +6,20 @@ import java.util.List;
 
 public class Bierkopf {
 
-  private List<Karte> alleKarten;
+  public List<Karte> alleKarten;
   public Stich stich;
   public Spieler[] spieler;
 
   public static void main(String[] args) {
     Bierkopf bierkopf = new Bierkopf();
-    bierkopf.spielen();
-    P.pln();
-    for (int i = 0; i < bierkopf.spieler.length; i++)
-      bierkopf.spieler[i].printAlleHandkarten();
-    P.pln();
+//    bierkopf.spielen();
+    bierkopf.spieler[3].gibAus();
+
+//    P.pln();
+//    P.pln("------------------------------------------");
+//    for (int i = 0; i < bierkopf.spieler.length; i++)
+//      bierkopf.spieler[i].printAlleHandkarten();
+//    P.pln();
   }
 
   public Bierkopf() {

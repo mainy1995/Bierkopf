@@ -8,13 +8,31 @@ public class User extends Spieler {
     super(_bierkopf, _handkarten, _name);
   }
 
-//Karten mit Eingabe auswählen
+  // Karten mit Eingabe auswählen
   @Override
   public Karte legeKarte() {
+    int index = 0;
+    boolean karteVorhanden = false;
 
-    // dummy
-    Karte k = handkarten.get(0);
-    P.pln("(" + name + ") Ich lege die Karte: " + k.getKarte());
+    do {
+      P.pln();
+      P.pln("--------------------------------------");
+      printAlleHandkarten();
+      P.pln();
+      String eingabe = Eingabe.readLine("(Ich) Ich lege die Karte: ");
+
+      for (Karte k : handkarten) {
+        if (eingabe.contentEquals(k.getKarte())) {
+          karteVorhanden = true;
+          index = handkarten.indexOf(k);
+          P.pln("(Ich) Gelegte Karte: " + k.getKarte());
+          break;
+        }
+      }
+
+    } while (!karteVorhanden);
+
+    Karte k = handkarten.get(index);
     removeKarte(k);
     return k;
   }

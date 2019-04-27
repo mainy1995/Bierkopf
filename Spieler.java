@@ -57,6 +57,7 @@ public class Spieler {
     P.pln("(" + name + ") Meine Karten sind:");
     for (Karte karte : handkarten)
       P.pln(karte.getKarte() + " " + karte.getTrumpf());
+    P.pln();
   }
 
   public Karte legeKarte() {
@@ -139,4 +140,29 @@ public class Spieler {
     // TODO weise Wählen
     return k;
   }
+
+  /*
+   * Es ist häßlich.
+   * Szenario: KI gewinnt den ersten Stich und kommt raus. Optimierungen freilich
+   * da.
+   */
+  public void gibAus() {
+    P.pln("(" + name + ") Alle Kartenkombinationen, die folgen können sind:");
+    int i = 0;
+    for (Karte k1 : bierkopf.alleKarten)
+      if (handkarten.contains(k1))// erste Karte ist innerhalb der Handkarten
+        for (Karte k2 : bierkopf.alleKarten)
+          if (!handkarten.contains(k2))// nachfolgenden nicht
+            for (Karte k3 : bierkopf.alleKarten)
+              if (!handkarten.contains(k3))
+                for (Karte k4 : bierkopf.alleKarten)
+                  if (!handkarten.contains(k4))
+                    if (!(k1.equals(k2) || k1.equals(k3) || k1.equals(k4) || k2.equals(k3) || k2.equals(k4)
+                        || k3.equals(k4))) {
+                      P.pln(k1.getKarte() + " " + k2.getKarte() + " " + k3.getKarte() + " " + k4.getKarte());
+                      i++;
+                    }
+    P.pln("Es sind noch " + i + " Kartenkombinationen im Spiel.");
+  }
+
 }
