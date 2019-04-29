@@ -3,16 +3,16 @@ package Bierkopf;
 import java.util.HashMap;
 
 enum FARBE {
-  EICHEL, BLATT, HERZ, SCHELLEN
+  SCHELLEN, HERZ, BLATT, EICHEL
 }
 
 enum ZAHL {
-  NEUN, UNTER, OBER, KOENIG, ZEHN, ASS
+  NEUN, KOENIG, ZEHN, ASS, UNTER, OBER
 }
 
 public class Karte {
-  private FARBE farbe;
-  private ZAHL zahl;
+  public FARBE farbe;
+  public ZAHL zahl;
   private boolean trumpf;
 
   private HashMap<ZAHL, String> zahlenMap;

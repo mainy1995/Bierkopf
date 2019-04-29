@@ -7,9 +7,10 @@ public class Spieler {
   protected String name;
   protected List<Karte> handkarten;
   protected Bierkopf bierkopf;
-  protected boolean trumpfFrei, eichelFrei, blattFrei, schellenfrei;
+  protected boolean trumpfFrei, eichelFrei, blattFrei, schellenFrei;
+  protected int position, punkte;
 
-  public Spieler(Bierkopf _bierkopf, List<Karte> _handkarten, String _name) {
+  public Spieler(Bierkopf _bierkopf, List<Karte> _handkarten, String _name, int _position) {
     P.pln();
     P.pln("Konstruktor: Spieler(" + _name + ")");
 
@@ -17,8 +18,8 @@ public class Spieler {
     handkarten = new ArrayList<Karte>();
     handkarten.addAll(_handkarten);
     name = _name;
-
-    trumpfFrei = eichelFrei = blattFrei = schellenfrei = true;
+    position = _position;
+    trumpfFrei = eichelFrei = blattFrei = schellenFrei = true;
 
     // eigene Handkarten auf "Freiheit" überprüfen
     for (Karte karte : handkarten) {
@@ -30,8 +31,8 @@ public class Spieler {
           eichelFrei = false;
         if (karte.getFarbe() == "B" && blattFrei)
           blattFrei = false;
-        if (karte.getFarbe() == "S" && schellenfrei)
-          schellenfrei = false;
+        if (karte.getFarbe() == "S" && schellenFrei)
+          schellenFrei = false;
       }
     }
 
@@ -46,7 +47,7 @@ public class Spieler {
       P.p(" eichelfrei,");
     if (blattFrei)
       P.p(" blattfrei,");
-    if (schellenfrei)
+    if (schellenFrei)
       P.p(" schellenfrei");
     P.pln(".");
 
@@ -60,8 +61,8 @@ public class Spieler {
     P.pln();
   }
 
-  public Karte legeKarte() {
-    Karte ersteKarte = bierkopf.stich.ersteKarte();
+  public Karte legeKarte(Stich liveStich) {
+    Karte ersteKarte = liveStich.ersteKarte();
     Karte dieKarte = null;
 
     // nicht rauskommen - also die erste Karte im Stich existiert
@@ -95,7 +96,7 @@ public class Spieler {
             dieKarte = ausFarbeWaehlen();
           }
         } else if (ersteKarte.getFarbe() == "S") {
-          if (schellenfrei) {
+          if (schellenFrei) {
             // ich habe keinen Schellen
             dieKarte = kamikazeFunktion();
           } else {
@@ -142,9 +143,8 @@ public class Spieler {
   }
 
   /*
-   * Es ist häßlich.
-   * Szenario: KI gewinnt den ersten Stich und kommt raus. Optimierungen freilich
-   * da.
+   * Es ist häßlich. Szenario: KI gewinnt den ersten Stich und kommt raus.
+   * Optimierungen freilich da.
    */
   public void gibAus() {
     P.pln("(" + name + ") Alle Kartenkombinationen, die folgen können sind:");
@@ -165,4 +165,11 @@ public class Spieler {
     P.pln("Es sind noch " + i + " Kartenkombinationen im Spiel.");
   }
 
+  public int getPosition() {
+    return position;
+  }
+
+  public int getPunkte() {
+    return punkte;
+  }
 }

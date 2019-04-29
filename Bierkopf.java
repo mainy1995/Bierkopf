@@ -7,25 +7,19 @@ import java.util.List;
 public class Bierkopf {
 
   public List<Karte> alleKarten;
-  public Stich stich;
-  public Spieler[] spieler;
+  public List<Stich> alleStiche;
+  public List<Spieler> alleSpieler;
 
   public static void main(String[] args) {
     Bierkopf bierkopf = new Bierkopf();
 //    bierkopf.spielen();
-    bierkopf.spieler[3].gibAus();
-
-//    P.pln();
-//    P.pln("------------------------------------------");
-//    for (int i = 0; i < bierkopf.spieler.length; i++)
-//      bierkopf.spieler[i].printAlleHandkarten();
-//    P.pln();
   }
 
   public Bierkopf() {
     P.pln("Konstruktor: Bierkopf()");
-    stich = new Stich();
+    alleStiche = new ArrayList<Stich>();
     alleKarten = new ArrayList<Karte>();
+    alleSpieler = new ArrayList<Spieler>();
 
     // initialisiere alle Karten
     for (FARBE f : FARBE.values())
@@ -38,12 +32,14 @@ public class Bierkopf {
     printAlleKarten();
 
     // 4 Spieler erstellen mit jeweils 6 Karten
-    spieler = new Spieler[] { // nl
-        new User(this, alleKarten.subList(0, 6), "Ich"), // nl
-        new Spieler(this, alleKarten.subList(6, 12), "Marie"), // nl
-        new Spieler(this, alleKarten.subList(12, 18), "Sepp"), // nl
-        new Spieler(this, alleKarten.subList(18, 24), "Konrad")// nl
-    };
+    alleSpieler.add(new User(this, alleKarten.subList(0, 6), "Ich", 0));
+    alleSpieler.add(new Spieler(this, alleKarten.subList(6, 12), "Marie", 1));
+    alleSpieler.add(new Spieler(this, alleKarten.subList(12, 18), "Sepp", 2));
+    alleSpieler.add(new Spieler(this, alleKarten.subList(18, 24), "Konrad", 3));
+    
+    P.nLines(2);
+    P.pln("---------------------Spielbeginn---------------------");
+    P.nLines(2);
   }
 
   // Ausgabe aller Karten
@@ -53,13 +49,20 @@ public class Bierkopf {
   }
 
   private void spielen() {
-//    for (int runde = 1; runde <= 6; runde++) {
-//      stich.neuerStich();
-//      for (int i = 1; i <= 4; i++)
-//        // Fundamental falsch, da Reihenfolge sich nicht ändert - aber fürn Anfang
+    for (int i = 0; i < 6; i++) {
+      Stich liveStich = new Stich();
+      for (Spieler spieler : alleSpieler) {
+        liveStich.zumStich(spieler.legeKarte(liveStich), spieler.position);
+      }
+      alleSpieler.get(liveStich.getGewinner()).punkte += liveStich.getPunkte();
+      alleStiche.add(liveStich);
+    }
+  }
 
-    Karte k1 = spieler[0].legeKarte();
-    stich.zumStich(k1);
-    alleKarten.remove(k1);
+  // Ausgabe eines Kartenbereiches mit String
+  public void printKarten(Karte[] karten, String title) {
+    P.pln(title);
+    for (Karte karte : karten)
+      P.pln(karte.getKarte() + " " + karte.getTrumpf());
   }
 }

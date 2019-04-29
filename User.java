@@ -4,13 +4,13 @@ import java.util.List;
 
 public class User extends Spieler {
 
-  public User(Bierkopf _bierkopf, List<Karte> _handkarten, String _name) {
-    super(_bierkopf, _handkarten, _name);
+  public User(Bierkopf _bierkopf, List<Karte> _handkarten, String _name, int _position) {
+    super(_bierkopf, _handkarten, _name, _position);
   }
 
   // Karten mit Eingabe auswählen
   @Override
-  public Karte legeKarte() {
+  public Karte legeKarte(Stich liveStich) {
     int index = 0;
     boolean karteVorhanden = false;
 
