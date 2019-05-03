@@ -1,50 +1,68 @@
 package Bierkopf;
 
-import java.util.List;
-import java.util.*;
 import java.util.ArrayList;
 import java.util.Collections;
-
+import java.util.List;
 
 public class Bierkopf {
 
-  List<Karte> all_cards;
+  public List<Karte> alleKarten;
+  public List<Stich> alleStiche;
+  public List<Spieler> alleSpieler;
 
   public static void main(String[] args) {
     Bierkopf bierkopf = new Bierkopf();
-    Spieler player_one = new Spieler(bierkopf);
-    player_one.teile_Handkarten_aus();
+//    bierkopf.spielen();
   }
 
   public Bierkopf() {
-    System.out.println("Konstruktor: Bierkopf()");
+    P.pln("Konstruktor: Bierkopf()");
+    alleStiche = new ArrayList<Stich>();
+    alleKarten = new ArrayList<Karte>();
+    alleSpieler = new ArrayList<Spieler>();
 
-    all_cards = new ArrayList<Karte>();
-
-    // initialize all cards
-    int i = 0;
+    // initialisiere alle Karten
     for (FARBE f : FARBE.values())
       for (ZAHL z : ZAHL.values())
-        all_cards.add(new Karte(z, f));
+        alleKarten.add(new Karte(z, f));
 
-    // print all cards + trump
-    all_cards.forEach((karte) -> {
-      System.out.print(karte.get_karte() + " ");
-      System.out.println(karte.get_trumpf());
-    });
-    mischeKarten();
-    all_cards.forEach((karte) -> {
-      System.out.print(karte.get_karte() + " ");
-      System.out.println(karte.get_trumpf());
-    });
+    // Karten mischen
+    Collections.shuffle(alleKarten);
 
+    printAlleKarten();
 
+    // 4 Spieler erstellen mit jeweils 6 Karten
+    alleSpieler.add(new User(this, alleKarten.subList(0, 6), "Ich", 0));
+    alleSpieler.add(new Spieler(this, alleKarten.subList(6, 12), "Marie", 1));
+    alleSpieler.add(new Spieler(this, alleKarten.subList(12, 18), "Sepp", 2));
+    alleSpieler.add(new Spieler(this, alleKarten.subList(18, 24), "Konrad", 3));
+    
+    P.nLines(2);
+    P.pln("---------------------Spielbeginn---------------------");
+    P.nLines(2);
   }
 
-  // Ausgabefunktion
+  // Ausgabe aller Karten
+  private void printAlleKarten() {
+    for (Karte karte : alleKarten)
+      P.pln(karte.getKarte() + " " + karte.getTrumpf());
+  }
 
-  public void mischeKarten()
-  {
-    Collections.shuffle(all_cards);
+  private void spielen() {
+    for (int i = 0; i < 6; i++) {
+      Stich liveStich = new Stich();
+      for (Spieler spieler : alleSpieler) {
+        liveStich.zumStich(spieler.legeKarte(liveStich), spieler.position);
+      }
+      alleSpieler.get(liveStich.getGewinner()).punkte += liveStich.getPunkte();
+      alleStiche.add(liveStich);
+    }
+  }
+
+  // Ausgabe eines Kartenbereiches mit String
+  public void printKarten(Karte[] karten, String title) {
+    P.pln(title);
+    for (Karte karte : karten)
+      P.pln(karte.getKarte() + " " + karte.getTrumpf());
   }
 }

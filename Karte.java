@@ -3,73 +3,77 @@ package Bierkopf;
 import java.util.HashMap;
 
 enum FARBE {
-  EICHEL, BLATT, HERZ, SCHELLEN
+  SCHELLEN, HERZ, BLATT, EICHEL
 }
 
 enum ZAHL {
-  NEUN, UNTER, OBER, KOENIG, ZEHN, ASS
+  NEUN, KOENIG, ZEHN, ASS, UNTER, OBER
 }
 
 public class Karte {
-  FARBE farbe;
-  ZAHL zahl;
-  int wertigkeit;
-  boolean trumpf;
+  public FARBE farbe;
+  public ZAHL zahl;
+  private boolean trumpf;
 
-  private String zahl(ZAHL _zahl) {
-    HashMap<ZAHL, String> zahl = new HashMap<ZAHL, String>();
-
-    zahl.put(ZAHL.NEUN, "9");
-    zahl.put(ZAHL.UNTER, "U");
-    zahl.put(ZAHL.OBER, "O");
-    zahl.put(ZAHL.KOENIG, "K");
-    zahl.put(ZAHL.ZEHN, "10");
-    zahl.put(ZAHL.ASS, "A");
-
-    return zahl.get(_zahl);
-  }
-
-  private String farbe(FARBE _farbe) {
-    HashMap<FARBE, String> farbton = new HashMap<FARBE, String>();
-
-    farbton.put(FARBE.EICHEL, "E");
-    farbton.put(FARBE.BLATT, "B");
-    farbton.put(FARBE.HERZ, "H");
-    farbton.put(FARBE.SCHELLEN, "S");
-
-    return farbton.get(_farbe);
-  }
-
-  private int wertigkeit(ZAHL _zahl) {
-    HashMap<ZAHL, Integer> wertigkeit = new HashMap<ZAHL, Integer>();
-
-    wertigkeit.put(ZAHL.NEUN, 0);
-    wertigkeit.put(ZAHL.UNTER, 2);
-    wertigkeit.put(ZAHL.OBER, 3);
-    wertigkeit.put(ZAHL.KOENIG, 4);
-    wertigkeit.put(ZAHL.ZEHN, 10);
-    wertigkeit.put(ZAHL.ASS, 11);
-
-    return wertigkeit.get(_zahl);
-  }
+  private HashMap<ZAHL, String> zahlenMap;
+  private HashMap<FARBE, String> farbenMap;
+  private HashMap<ZAHL, Integer> punkteMap;
 
   public Karte(ZAHL _zahl, FARBE _farbe) {
+    zahlenMap = new HashMap<ZAHL, String>();
+    farbenMap = new HashMap<FARBE, String>();
+    punkteMap = new HashMap<ZAHL, Integer>();
+    initMap();
+
     farbe = _farbe;
     zahl = _zahl;
-    wertigkeit = wertigkeit(_zahl);
 
-    if(farbe(farbe) == "H" || zahl(zahl) == "U" || zahl(zahl) == "O" ) {
+    if (farbenMap.get(farbe) == "H" || zahlenMap.get(zahl) == "U" || zahlenMap.get(zahl) == "O") {
       trumpf = true;
+    } else {
+      trumpf = false;
     }
-    else { trumpf = false; }
   }
 
-  public String get_karte() {
-    return zahl(zahl) + farbe(farbe);
+  private void initMap() {
+    zahlenMap.put(ZAHL.NEUN, "9");
+    zahlenMap.put(ZAHL.UNTER, "U");
+    zahlenMap.put(ZAHL.OBER, "O");
+    zahlenMap.put(ZAHL.KOENIG, "K");
+    zahlenMap.put(ZAHL.ZEHN, "10");
+    zahlenMap.put(ZAHL.ASS, "A");
+
+    farbenMap.put(FARBE.EICHEL, "E");
+    farbenMap.put(FARBE.BLATT, "B");
+    farbenMap.put(FARBE.HERZ, "H");
+    farbenMap.put(FARBE.SCHELLEN, "S");
+
+    punkteMap.put(ZAHL.NEUN, 0);
+    punkteMap.put(ZAHL.UNTER, 2);
+    punkteMap.put(ZAHL.OBER, 3);
+    punkteMap.put(ZAHL.KOENIG, 4);
+    punkteMap.put(ZAHL.ZEHN, 10);
+    punkteMap.put(ZAHL.ASS, 11);
   }
 
-  public String get_trumpf() {
-    return Boolean.toString(trumpf);
+  public String getKarte() {
+    return getZahl() + getFarbe();
+  }
+
+  public String getFarbe() {
+    return farbenMap.get(farbe);
+  }
+
+  public String getZahl() {
+    return zahlenMap.get(zahl);
+  }
+
+  public int getPunkte() {
+    return punkteMap.get(zahl);
+  }
+
+  public boolean getTrumpf() {
+    return trumpf;
   }
 
 }
