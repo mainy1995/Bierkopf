@@ -6,6 +6,8 @@ public class Stich {
   private Karte hoechsteKarte, ersteKarte;
 
   public Stich() {
+    P.pln();
+    P.pln("---------------------Neuer Stich---------------------");
     karten = new Karte[4];
     punkte = 0;
   }
@@ -27,10 +29,6 @@ public class Stich {
     }
   }
 
-  public int getGewinner() {
-    return gewinnerPosition;
-  }
-
   public boolean isthoechsteKarte(Karte gelegteKarte) {
     if (hoechsteKarte.getTrumpf()) {
       if (gelegteKarte.getTrumpf()) {
@@ -39,16 +37,12 @@ public class Stich {
         if (i > 0) {
           return true;
         }
-        /*************************************************************
-         * Ist das Nachfolgende nicht unnötig, da nur Herz Trumpf ist?
-         ************************************************************/
+        // Farbvergleich nötig für Ober und Unter
         else if (i == 0) {
           int j = gelegteKarte.farbe.compareTo(hoechsteKarte.farbe);
-          // j wird doch stets 0 sein?
           if (j > 0)
             return true;
         }
-        /************************************************************/
       }
     }
     // hoechste Karte ist nicht Trumpf
@@ -64,14 +58,8 @@ public class Stich {
         int i = gelegteKarte.farbe.compareTo(hoechsteKarte.farbe);
         if (i == 0) {
           int j = gelegteKarte.zahl.compareTo(hoechsteKarte.zahl);
-          if (j > 0) {
+          if (j > 0)
             return true;
-          }
-          /*************************************************************
-           * Das nachfolgende Return zuviel?
-           ************************************************************/
-          return true;
-          /************************************************************/
         }
       }
     }
