@@ -6,7 +6,9 @@ import java.util.List;
 public class Spieler {
   protected String name;
   protected List<Karte> handkarten;
-  protected Bierkopf bierkopf;
+
+  protected Bierkopf bierkopf, virtualBierkopf;
+
   protected boolean trumpfFrei, eichelFrei, blattFrei, schellenFrei;
   protected int position, punkte;
 
@@ -80,7 +82,7 @@ public class Spieler {
         if (trumpfFrei) {
           // ich habe keinen Trumpf
           bierkopf.spielerInfo.trumpfFrei[position] = true;
-          dieKarte = kamikazeFunktion();
+          dieKarte = kamikazeFunktion(handkarten);
         } else {
           // ich gebe Trumpf zu
           dieKarte = farbeZugeben(ersteKarte, true);
@@ -92,7 +94,7 @@ public class Spieler {
           if (eichelFrei) {
             // ich habe keine Eichel
             bierkopf.spielerInfo.eichelFrei[position] = true;
-            dieKarte = kamikazeFunktion();
+            dieKarte = kamikazeFunktion(handkarten);
           } else {
             // ich gebe Eichel zu
             dieKarte = farbeZugeben(ersteKarte, false);
@@ -101,7 +103,7 @@ public class Spieler {
           if (blattFrei) {
             // ich habe keinen Blatt
             bierkopf.spielerInfo.blattFrei[position] = true;
-            dieKarte = kamikazeFunktion();
+            dieKarte = kamikazeFunktion(handkarten);
           } else {
             // ich gebe Blatt zu
             dieKarte = farbeZugeben(ersteKarte, false);
@@ -110,7 +112,7 @@ public class Spieler {
           if (schellenFrei) {
             // ich habe keinen Schellen
             bierkopf.spielerInfo.schellenFrei[position] = true;
-            dieKarte = kamikazeFunktion();
+            dieKarte = kamikazeFunktion(handkarten);
           } else {
             // ich gebe Schellen zu
             dieKarte = farbeZugeben(ersteKarte, false);
@@ -120,7 +122,8 @@ public class Spieler {
     }
     // ich komme raus
     else {
-      dieKarte = kamikazeFunktion();
+      dieKarte = kamikazeFunktion(handkarten);
+
     }
 
     removeKarte(dieKarte);
@@ -136,12 +139,23 @@ public class Spieler {
   }
 
   // irgendwie Baum aufbauen und beste Karte für den Stich wählen
-  private Karte kamikazeFunktion() {
-    Karte k = null;
-    // TODO Drachen bezwingen
-    // die nachfolgende Zeile ist FALSCH
-    k = handkarten.get(0);
-    return k;
+  private Karte kamikazeFunktion(List<Karte> moeglicheKarten) {
+    Karte dieKarte = null;
+    int hoechsteBewertung = 0;
+
+    for (Karte kk : moeglicheKarten)
+      // remove kk
+      // virtueller Bierkopf(bierkopf.alleKarten, liveStich, kk,this(spieler),...)
+      // virtBierkopf.spiele() returnt bewertung fuer karte kk
+      // if bewertung>hoechsteBewertung
+      // diekarte=kk
+      // else
+      // add(kk)
+      ;
+
+    // FALSCH
+    dieKarte = moeglicheKarten.get(0);
+    return dieKarte;
   }
 
   // Farbe oder Trumpf bekennen
@@ -149,7 +163,9 @@ public class Spieler {
   private Karte farbeZugeben(Karte ersteKarte, boolean trumpf) {
     Karte dieKarte = null;
     List<Integer> indizes = new ArrayList<Integer>();
+    List<Karte> moeglicheKarten = new ArrayList<Karte>();
 
+    // Farbe
     int anzahlKarten = 0;
     if (!trumpf) {
       for (Karte karte : handkarten)
@@ -161,8 +177,11 @@ public class Spieler {
         dieKarte = handkarten.get(indizes.get(0));
       else {
         // TODO weise Wählen
+        for (int i : indizes)
+          moeglicheKarten.add(handkarten.get(i));
+        dieKarte = kamikazeFunktion(moeglicheKarten);
         // die nachfolgende Zeile ist FALSCH
-        dieKarte = handkarten.get(indizes.get(0));
+        // dieKarte = handkarten.get(indizes.get(0));
       }
     }
     // trumpf
@@ -177,7 +196,10 @@ public class Spieler {
       else {
         // TODO weise Wählen
         // die nachfolgende Zeile ist FALSCH
-        dieKarte = handkarten.get(indizes.get(0));
+        // dieKarte = handkarten.get(indizes.get(0));
+        for (int i : indizes)
+          moeglicheKarten.add(handkarten.get(i));
+        dieKarte = kamikazeFunktion(moeglicheKarten);
       }
     }
     return dieKarte;
@@ -191,7 +213,8 @@ public class Spieler {
     int i = 0;
     for (Karte k1 : handkarten)// erste Karte ist eine Handkarte
       for (Karte k2 : bierkopf.alleKarten)
-        if (!handkarten.contains(k2))// nachfolgenden Karten sind nicht auf der Hand
+        if (!handkarten.contains(k2))// nachfolgenden Karten sind nicht
+          // auf der Hand
           for (Karte k3 : bierkopf.alleKarten)
             if (!(handkarten.contains(k3) || k2.equals(k3)))
               for (Karte k4 : bierkopf.alleKarten)
