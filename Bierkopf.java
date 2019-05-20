@@ -49,13 +49,13 @@ public class Bierkopf {
 			P.pln(karte.getKarte() + " " + karte.getTrumpf());
 	}
 
-	private void spielen() {
+	public void spielen() {
 		int gewinner = 0;
 		for (int i = 0; i < 6; i++) {
 			Stich liveStich = new Stich();
-			for (int anfaenger = gewinner; anfaenger - gewinner < 4; anfaenger++) {
-				Karte gelegteKarte = alleSpieler.get(anfaenger % 4).legeKarte(liveStich);
-				liveStich.zumStich(gelegteKarte, alleSpieler.get(anfaenger % 4).position);
+			for (int werDranIst = gewinner; werDranIst - gewinner < 4; werDranIst++) {
+				Karte gelegteKarte = alleSpieler.get(werDranIst % 4).legeKarte(liveStich);
+				liveStich.zumStich(gelegteKarte, alleSpieler.get(werDranIst % 4).position);
 				alleKarten.remove(gelegteKarte);
 			}
 			gewinner = liveStich.getGewinnerPosition();

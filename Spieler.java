@@ -6,11 +6,13 @@ import java.util.List;
 public class Spieler {
   protected String name;
   protected List<Karte> handkarten;
-
-  protected Bierkopf bierkopf, virtualBierkopf;
-
+  protected Bierkopf bierkopf;
   protected boolean trumpfFrei, eichelFrei, blattFrei, schellenFrei;
   protected int position, punkte;
+
+  // added
+  private VirtualBierkopf virtualBierkopf;
+  private Stich liveStich;
 
   public Spieler(Bierkopf _bierkopf, List<Karte> _handkarten, String _name, int _position) {
     P.pln();
@@ -25,7 +27,6 @@ public class Spieler {
     punkte = 0;
 
     printAlleHandkarten();
-
   }
 
   // eigene Handkarten auf "Freiheit" überprüfen
@@ -68,7 +69,8 @@ public class Spieler {
     P.pln(".");
   }
 
-  public Karte legeKarte(Stich liveStich) {
+  public Karte legeKarte(Stich _liveStich) {
+    liveStich = _liveStich;
     P.pln();
     P.pln("(" + name + ") Ich bin am Zug.");
     Karte ersteKarte = liveStich.ersteKarte();
@@ -138,21 +140,18 @@ public class Spieler {
       P.pln("Karte war nicht Teil der Hand!");
   }
 
-  // irgendwie Baum aufbauen und beste Karte für den Stich wählen
+  // irgendwie Baum aufbauen und beste Karte fuer den Stich waehlen
   private Karte kamikazeFunktion(List<Karte> moeglicheKarten) {
     Karte dieKarte = null;
     int hoechsteBewertung = 0;
 
-    for (Karte kk : moeglicheKarten)
-      // remove kk
-      // virtueller Bierkopf(bierkopf.alleKarten, liveStich, kk,this(spieler),...)
-      // virtBierkopf.spiele() returnt bewertung fuer karte kk
-      // if bewertung>hoechsteBewertung
-      // diekarte=kk
-      // else
-      // add(kk)
-      ;
+    for (Karte kk : moeglicheKarten) {
+      virtualBierkopf = new VirtualBierkopf(bierkopf.alleKarten, kk, this, liveStich);
 
+      int bewertung = virtualBierkopf.virtuellSpielen();
+      if (bewertung > hoechsteBewertung)
+        dieKarte = kk;
+    }
     // FALSCH
     dieKarte = moeglicheKarten.get(0);
     return dieKarte;
