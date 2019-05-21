@@ -54,7 +54,7 @@ public class Bierkopf {
 		for (int i = 0; i < 6; i++) {
 			Stich liveStich = new Stich();
 			for (int werDranIst = gewinner; werDranIst - gewinner < 4; werDranIst++) {
-				Karte gelegteKarte = alleSpieler.get(werDranIst % 4).legeKarte(liveStich);
+				Karte gelegteKarte = alleSpieler.get(werDranIst % 4).legeKarte(liveStich, false);
 				liveStich.zumStich(gelegteKarte, alleSpieler.get(werDranIst % 4).position);
 				alleKarten.remove(gelegteKarte);
 			}

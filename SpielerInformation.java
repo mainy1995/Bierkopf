@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class SpielerInformation {
 
   public boolean[] trumpfFrei, eichelFrei, blattFrei, schellenFrei;
-  private HashMap<String, boolean[]> userFarbMap;
+  private HashMap<String, boolean[]> spielerFarbMap;
 
   // Zustände werden von jedem Spieler selbst auf TRUE gesetzt, wenn er nicht
   // Farbe/Trumpf zugeben kann
@@ -16,15 +16,15 @@ public class SpielerInformation {
     blattFrei = new boolean[4];
     schellenFrei = new boolean[4];
 
-    userFarbMap = new HashMap<String, boolean[]>();
-    userFarbMap.put("E", eichelFrei);
-    userFarbMap.put("B", blattFrei);
-    userFarbMap.put("S", schellenFrei);
+    spielerFarbMap = new HashMap<String, boolean[]>();
+    spielerFarbMap.put("E", eichelFrei);
+    spielerFarbMap.put("B", blattFrei);
+    spielerFarbMap.put("S", schellenFrei);
   }
 
   // Zustände des Users auf TRUE setzen
-  public void setUserFarbe(String farbe) {
-    userFarbMap.get(farbe)[0] = true;
+  public void setSpielerFarbe(String farbe, int position) {
+    spielerFarbMap.get(farbe)[position] = true;
   }
 
 }
