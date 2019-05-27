@@ -82,6 +82,12 @@ public class Spieler {
 		Karte dieKarte = null;
 		if (!handkarten.isEmpty()) {
 			List<Karte> moeglicheKarten = moeglicheKarten();
+
+			P.p("mögliche Karten: ");
+			for (Karte m : moeglicheKarten)
+				P.p(m.getKarte() + ",");
+			P.pln();
+
 			if (!virtuell && moeglicheKarten.size() == 1)
 				dieKarte = moeglicheKarten.get(0);
 			else {
@@ -89,13 +95,16 @@ public class Spieler {
 
 				for (Karte kk : moeglicheKarten) {
 					handkarten.remove(kk);
-					virtualBierkopf = new VirtualBierkopf(bierkopf.alleKarten, kk, this, liveStich);
-					handkarten.add(kk);
+					bierkopf.alleKarten.remove(kk);
+					virtualBierkopf = new VirtualBierkopf(bierkopf.alleKarten, kk, this, liveStich, bierkopf);					
 					int bewertung = virtualBierkopf.virtuellSpielen();
+					P.pln("Karte:" + kk.getKarte() + " | Bewertung: " + bewertung);
 					if (bewertung > hoechsteBewertung) {
 						dieKarte = kk;
 						hoechsteBewertung = bewertung;
 					}
+					handkarten.add(kk);
+					bierkopf.alleKarten.add(kk);
 				}
 			}
 		}
