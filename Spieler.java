@@ -11,8 +11,9 @@ public class Spieler {
   protected boolean trumpfFrei, eichelFrei, blattFrei, schellenFrei;
   protected int position, punkte;
   protected HashMap<String, Boolean> farbenFreiMap;
-  private VirtualBierkopf virtualBierkopf;
+  private VirtualBierkopf vBierkopf;
   private Stich liveStich;
+  private List<Karte> vKarten, vHandKarten;
 
   public Spieler(Bierkopf _bierkopf, List<Karte> _handkarten, String _name, int _position) {
     P.pln();
@@ -25,6 +26,13 @@ public class Spieler {
     position = _position;
     punkte = 0;
     farbenFreiMap = new HashMap<String, Boolean>();
+    vKarten = new ArrayList<Karte>();
+    vHandKarten = new ArrayList<Karte>();
+
+    vKarten.addAll(bierkopf.alleKarten);
+    vKarten.removeAll(handkarten);
+
+    vHandKarten.addAll(handkarten);
 
     printAlleHandkarten();
   }
@@ -85,7 +93,7 @@ public class Spieler {
     if (!handkarten.isEmpty()) {
       List<Karte> moeglicheKarten = moeglicheKarten();
 
-      P.p("m�gliche Karten: ");
+      P.p("moegliche Karten: ");
       for (Karte m : moeglicheKarten)
         P.p(m.getKarte() + ",");
       P.pln();
@@ -94,22 +102,24 @@ public class Spieler {
         dieKarte = moeglicheKarten.get(0);
       else {
         int hoechsteBewertung = 0;
-        bierkopf.alleKarten.removeAll(handkarten);
+
+        vKarten.addAll(bierkopf.alleKarten);
+        vKarten.removeAll(handkarten);
+
         for (Karte kk : moeglicheKarten) {
           P.pln("moegliche Karte: " + kk.getKarte());
-          handkarten.remove(kk);
-          virtualBierkopf = new VirtualBierkopf(bierkopf.alleKarten, kk, this, liveStich, bierkopf);
-          int bewertung = virtualBierkopf.virtuellSpielen();
+          vHandKarten.remove(kk);
+          vBierkopf = new VirtualBierkopf(vKarten, kk, this, liveStich, bierkopf);
+          int bewertung = vBierkopf.virtuellSpielen();
           P.pln("Karte:" + kk.getKarte() + " | Bewertung: " + bewertung);
           if (bewertung > hoechsteBewertung) {
             dieKarte = kk;
             hoechsteBewertung = bewertung;
           }
-          handkarten.add(kk);
+          vHandKarten.add(kk);
         }
         dieKarte = moeglicheKarten.get(0);
-        bierkopf.alleKarten.addAll(handkarten);
-        P.pln(bierkopf.alleKarten.size());
+        P.pln(bierkopf.alleKarten.size());        
       }
     }
     removeKarte(dieKarte);

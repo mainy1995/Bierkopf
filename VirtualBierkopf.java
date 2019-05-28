@@ -11,12 +11,14 @@ public class VirtualBierkopf {
 
   public VirtualBierkopf(List<Karte> _alleKarten, Karte _zuBetrachtendeKarte, Spieler _spieler, Stich _liveStich,
       Bierkopf _bierkopf) {
+
     alleKarten = _alleKarten;
+
     zuBetrachtendeKarte = _zuBetrachtendeKarte;
     spieler = _spieler;
     liveStich = _liveStich;
     bierkopf = _bierkopf;
-    P.pln("Neuer Virtueller Bierkopf f�r Karte " + zuBetrachtendeKarte.getKarte());
+    P.pln("Neuer Virtueller Bierkopf fuer Karte " + zuBetrachtendeKarte.getKarte());
   }
 
   /*
@@ -71,9 +73,9 @@ public class VirtualBierkopf {
     }
   }
 
-  // n�chste Position ist falsch
+  // naechste Position ist falsch
   private void fuelleNeuenStich(int tiefe, int _naechstePosition) {
-    P.pln("f�lleNeuenStich");
+    P.pln("fuelleNeuenStich");
     // nächsten Stich weiterspielen bis Spieler dran ist
     int naechstePosition = (_naechstePosition + 1) % 4;
     // nach alle moeglichen Kombinationen den Stich zu beenden
@@ -86,7 +88,7 @@ public class VirtualBierkopf {
       P.pln("Tiefe: " + tiefe + ", Karte: " + k2.getKarte());
       liveStich.zumStich(k2, naechstePosition);
       alleKarten.remove(k2);
-      // letzte �nderung hier: legeKarte in fuelleNeuenStich
+
       fuelleNeuenStich(tiefe - 1, naechstePosition);
       alleKarten.add(k2);
     }
