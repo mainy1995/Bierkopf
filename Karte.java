@@ -36,24 +36,24 @@ public class Karte {
   }
 
   private void initMap() {
-    zahlenMap.put(ZAHL.NEUN, "9");
-    zahlenMap.put(ZAHL.UNTER, "U");
-    zahlenMap.put(ZAHL.OBER, "O");
-    zahlenMap.put(ZAHL.KOENIG, "K");
-    zahlenMap.put(ZAHL.ZEHN, "10");
-    zahlenMap.put(ZAHL.ASS, "A");
+    zahlenMap.put(zahl.NEUN, "9");
+    zahlenMap.put(zahl.UNTER, "U");
+    zahlenMap.put(zahl.OBER, "O");
+    zahlenMap.put(zahl.KOENIG, "K");
+    zahlenMap.put(zahl.ZEHN, "10");
+    zahlenMap.put(zahl.ASS, "A");
 
     farbenMap.put(FARBE.EICHEL, "E");
     farbenMap.put(FARBE.BLATT, "B");
     farbenMap.put(FARBE.HERZ, "H");
     farbenMap.put(FARBE.SCHELLEN, "S");
 
-    punkteMap.put(ZAHL.NEUN, 0);
-    punkteMap.put(ZAHL.UNTER, 2);
-    punkteMap.put(ZAHL.OBER, 3);
-    punkteMap.put(ZAHL.KOENIG, 4);
-    punkteMap.put(ZAHL.ZEHN, 10);
-    punkteMap.put(ZAHL.ASS, 11);
+    punkteMap.put(zahl.NEUN, 0);
+    punkteMap.put(zahl.UNTER, 2);
+    punkteMap.put(zahl.OBER, 3);
+    punkteMap.put(zahl.KOENIG, 4);
+    punkteMap.put(zahl.ZEHN, 10);
+    punkteMap.put(zahl.ASS, 11);
   }
 
   public String getKarte() {
