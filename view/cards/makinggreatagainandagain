@@ -1,0 +1,36 @@
+#!/bin/bash
+
+ls > asdf
+
+png=^*png$
+
+sechs=^Sechs*
+sieben=^Sieb*
+acht=^Ac*
+neun=^Neun*
+zehn=^Zehn*
+koenig=^K*
+ass=^Ass*
+unter=^U*
+ober=^O*
+
+eichel=[*_Eichel*]
+blatt=*_B*
+herz=*_H*
+schell=*_S*
+
+
+while read line; do
+
+    if [[  $line =~ $png ]]; then
+           echo $line
+#        if [[  $line =~ $eichel ]]; then
+
+#        fi
+    fi
+done < asdf
+rm asdf
+
+
+
+
