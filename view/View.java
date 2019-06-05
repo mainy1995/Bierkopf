@@ -37,12 +37,12 @@ public class View extends javax.swing.JFrame {
         buttonMap.put(handkarten.get(4).getKarte(), handkartePos5);
         buttonMap.put(handkarten.get(5).getKarte(), handkartePos6);
 
-        gethandkartePos1().setIcon(updateCard(handkarten.get(0).getKarte(), 4));
-        gethandkartePos2().setIcon(updateCard(handkarten.get(1).getKarte(), 4));
-        gethandkartePos3().setIcon(updateCard(handkarten.get(2).getKarte(), 4));
-        gethandkartePos4().setIcon(updateCard(handkarten.get(3).getKarte(), 4));
-        gethandkartePos5().setIcon(updateCard(handkarten.get(4).getKarte(), 4));
-        gethandkartePos6().setIcon(updateCard(handkarten.get(5).getKarte(), 4));
+        gethandkartePos1().setIcon(updateCard(handkarten.get(0).getKarte()));
+        gethandkartePos2().setIcon(updateCard(handkarten.get(1).getKarte()));
+        gethandkartePos3().setIcon(updateCard(handkarten.get(2).getKarte()));
+        gethandkartePos4().setIcon(updateCard(handkarten.get(3).getKarte()));
+        gethandkartePos5().setIcon(updateCard(handkarten.get(4).getKarte()));
+        gethandkartePos6().setIcon(updateCard(handkarten.get(5).getKarte()));
 
     }
 
@@ -98,13 +98,6 @@ public class View extends javax.swing.JFrame {
         handkartePos1.addActionListener(karte1);
     }
 
-    public void update() {
-        getkarteUnten().setIcon(updateCard("Ass_Blatt", 1));
-        getkarteOben().setIcon(updateCard("Ass_Blatt", 1));
-        getkarteRechts().setIcon(rotateIcon(updateCard("Ass_Blatt", 1)));
-        getkarteLinks().setIcon(rotateIcon(updateCard("Ass_Blatt", 1)));
-    }
-
     public Image scaleImage(Image image, int w, int h) {
 
         Image scaled = image.getScaledInstance(w, h, Image.SCALE_SMOOTH);
@@ -133,10 +126,10 @@ public class View extends javax.swing.JFrame {
         }
     }
 
-    public ImageIcon updateCard(String kartenname, int scale_factor) {
+    public ImageIcon updateCard(String kartenname) {
         String kartenPfad = String.format("cards/%s.png", kartenname);
         System.out.println(kartenPfad);
-        ImageIcon cardImage = createImageIcon(kartenPfad, 4);
+        ImageIcon cardImage = createImageIcon(kartenPfad, 3);
         return cardImage;
     }
 
@@ -157,6 +150,8 @@ public class View extends javax.swing.JFrame {
         handkartePos4 = new javax.swing.JToggleButton();
         handkartePos5 = new javax.swing.JToggleButton();
         handkartePos6 = new javax.swing.JToggleButton();
+        jPanel3 = new javax.swing.JPanel();
+        userText = new javax.swing.JLabel();
         spieltischPanel = new javax.swing.JPanel();
         karteUnten = new javax.swing.JLabel();
         karteOben = new javax.swing.JLabel();
@@ -166,7 +161,7 @@ public class View extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Bandit");
 
-        handkartenPanel.setPreferredSize(new java.awt.Dimension(1000, 180));
+        handkartenPanel.setPreferredSize(new java.awt.Dimension(685, 250));
 
         handkartePos1.setText("");
 
@@ -180,37 +175,59 @@ public class View extends javax.swing.JFrame {
 
         handkartePos6.setText("");
 
+        userText.setText("jLabel5");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(userText)
+                .addContainerGap(554, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(userText))
+        );
+
         javax.swing.GroupLayout handkartenPanelLayout = new javax.swing.GroupLayout(handkartenPanel);
         handkartenPanel.setLayout(handkartenPanelLayout);
         handkartenPanelLayout.setHorizontalGroup(
             handkartenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(handkartenPanelLayout.createSequentialGroup()
-                .addComponent(handkartePos1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(handkartePos2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(handkartePos3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(handkartePos4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(handkartePos5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(handkartePos6)
-                .addGap(0, 31, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(handkartenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(handkartenPanelLayout.createSequentialGroup()
+                        .addComponent(handkartePos1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(handkartePos2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(handkartePos3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(handkartePos4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(handkartePos5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(handkartePos6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(410, Short.MAX_VALUE))
         );
         handkartenPanelLayout.setVerticalGroup(
             handkartenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, handkartenPanelLayout.createSequentialGroup()
-                .addGap(0, 2, Short.MAX_VALUE)
-                .addGroup(handkartenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(handkartenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(handkartePos4, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(handkartePos5, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(handkartePos6, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(handkartenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(handkartePos1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(handkartePos2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(handkartePos3, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))))
+            .addGroup(handkartenPanelLayout.createSequentialGroup()
+                .addGroup(handkartenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(handkartePos1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(handkartePos2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(handkartePos3, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(handkartePos4, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(handkartePos5, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(handkartePos6, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         getContentPane().add(handkartenPanel, java.awt.BorderLayout.PAGE_END);
@@ -218,11 +235,11 @@ public class View extends javax.swing.JFrame {
         spieltischPanel.setLayout(new java.awt.GridBagLayout());
 
         karteUnten.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        karteUnten.setText("");
+        karteUnten.setText("Karten_unten");
         karteUnten.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        karteUnten.setMaximumSize(new java.awt.Dimension(kartenbreite,kartenhoehe));
-        karteUnten.setMinimumSize(new java.awt.Dimension(kartenbreite,kartenhoehe));
-        karteUnten.setPreferredSize(new java.awt.Dimension(kartenbreite,kartenhoehe));
+        karteUnten.setMaximumSize(new java.awt.Dimension(75, 100));
+        karteUnten.setMinimumSize(new java.awt.Dimension(75, 100));
+        karteUnten.setPreferredSize(new java.awt.Dimension(75, 100));
         karteUnten.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -230,11 +247,11 @@ public class View extends javax.swing.JFrame {
         spieltischPanel.add(karteUnten, gridBagConstraints);
 
         karteOben.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        karteOben.setText("");
+        karteOben.setText("Karte_oben");
         karteOben.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        karteOben.setMaximumSize(new java.awt.Dimension(kartenbreite,kartenhoehe));
-        karteOben.setMinimumSize(new java.awt.Dimension(kartenbreite,kartenhoehe));
-        karteOben.setPreferredSize(new java.awt.Dimension(kartenbreite,kartenhoehe));
+        karteOben.setMaximumSize(new java.awt.Dimension(75, 100));
+        karteOben.setMinimumSize(new java.awt.Dimension(75, 100));
+        karteOben.setPreferredSize(new java.awt.Dimension(75, 100));
         karteOben.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -242,11 +259,11 @@ public class View extends javax.swing.JFrame {
         spieltischPanel.add(karteOben, gridBagConstraints);
 
         karteRechts.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        karteRechts.setText("");
+        karteRechts.setText("Karte_rechts");
         karteRechts.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        karteRechts.setMaximumSize(new java.awt.Dimension(kartenhoehe, kartenbreite));
-        karteRechts.setMinimumSize(new java.awt.Dimension(kartenhoehe, kartenbreite));
-        karteRechts.setPreferredSize(new java.awt.Dimension(kartenhoehe, kartenbreite));
+        karteRechts.setMaximumSize(new java.awt.Dimension(100, 75));
+        karteRechts.setMinimumSize(new java.awt.Dimension(100, 75));
+        karteRechts.setPreferredSize(new java.awt.Dimension(100, 75));
         karteRechts.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -254,11 +271,11 @@ public class View extends javax.swing.JFrame {
         spieltischPanel.add(karteRechts, gridBagConstraints);
 
         karteLinks.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        karteLinks.setText("");
+        karteLinks.setText("Karte_links");
         karteLinks.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        karteLinks.setMaximumSize(new java.awt.Dimension(kartenhoehe, kartenbreite));
-        karteLinks.setMinimumSize(new java.awt.Dimension(kartenhoehe, kartenbreite));
-        karteLinks.setPreferredSize(new java.awt.Dimension(kartenhoehe, kartenbreite));
+        karteLinks.setMaximumSize(new java.awt.Dimension(100, 75));
+        karteLinks.setMinimumSize(new java.awt.Dimension(100, 75));
+        karteLinks.setPreferredSize(new java.awt.Dimension(100, 75));
         karteLinks.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -267,7 +284,7 @@ public class View extends javax.swing.JFrame {
 
         getContentPane().add(spieltischPanel, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(750, 600));
+        setSize(new java.awt.Dimension(1182, 664));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -309,19 +326,19 @@ public class View extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel karteUnten; // oben
-    private javax.swing.JLabel karteOben;
-    private javax.swing.JLabel karteRechts; //rechts
-    private javax.swing.JLabel karteLinks;
-    private javax.swing.JPanel handkartenPanel;
-    private javax.swing.JPanel spieltischPanel;
     private javax.swing.JToggleButton handkartePos1;
     private javax.swing.JToggleButton handkartePos2;
     private javax.swing.JToggleButton handkartePos3;
     private javax.swing.JToggleButton handkartePos4;
     private javax.swing.JToggleButton handkartePos5;
     private javax.swing.JToggleButton handkartePos6;
-    private final int kartenbreite = 90;
-    private final int kartenhoehe  = 150;
+    private javax.swing.JPanel handkartenPanel;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel karteLinks;
+    private javax.swing.JLabel karteOben;
+    private javax.swing.JLabel karteRechts;
+    private javax.swing.JLabel karteUnten;
+    private javax.swing.JPanel spieltischPanel;
+    private javax.swing.JLabel userText;
     // End of variables declaration//GEN-END:variables
 }

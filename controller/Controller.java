@@ -22,37 +22,37 @@ public class Controller implements ActionListener {
         this.view = view;
         this.bierkopf = bierkopf;
         getHandKarten();
-
-        // Hier müssen dazu noch die anderen Events registriert werden -> Verzahnung mit Modell: Spielablauf
-        view.addSpieleKarte1Listener(new spieleKarteListener());
     }
 
     public void getHandKarten() {
         view.updateHandkarten(bierkopf.alleSpieler.get(0).handkarten);
     }
 
-    ////// inner Class spieleKarteListener ////
-    // Frage: Detektion, welche Karte wirklich gespielt wurde, ist die gespielte Karte erlaubt? 
-    // ->>>Verzahnung mit Modell
-    class spieleKarteListener implements ActionListener {
-
-        public void actionPerformed(ActionEvent e) {
-            //view.getkarteUnten().setIcon(updateCard("Schell_Blatt",1));
-            System.out.println("Event detektiert");
-
-        }
+    public void registerEvents() {
+        view.gethandkartePos1().addActionListener(this);
+        view.gethandkartePos2().addActionListener(this);
+        view.gethandkartePos3().addActionListener(this);
+        view.gethandkartePos4().addActionListener(this);
+        view.gethandkartePos5().addActionListener(this);
+        view.gethandkartePos6().addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent evt) {
-//    if (bandit.isRunning())
-//    {
-//      view.getBtnStartStop().setText("Start");
-//    }
-//    else
-//    {
-//      view.getBtnStartStop().setText("Stop");
-//    }
-//    bandit.rollDice();
+        Object src = evt.getSource();
+
+        if (src == view.gethandkartePos1()) {
+            System.out.println("Handkarte 1");
+        } else if (src == view.gethandkartePos2()) {
+            System.out.println("Handkarte 2");
+        } else if (src == view.gethandkartePos3()) {
+            System.out.println("Handkarte 3");
+        } else if (src == view.gethandkartePos4()) {
+            System.out.println("Handkarte 4");
+        } else if (src == view.gethandkartePos5()) {
+            System.out.println("Handkarte 5");
+        } else if (src == view.gethandkartePos6()) {
+            System.out.println("Handkarte 6");
+        }
     }
 }

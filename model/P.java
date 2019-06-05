@@ -8,28 +8,28 @@ public class P {
    */
 
   public static void pln() {
-    System.out.println();
+//    System.out.println();
   }
 
   public static void nLines(int n) {
-    for (int i = 0; i < n; i++)
-      System.out.println();
+//    for (int i = 0; i < n; i++)
+//      System.out.println();
   }
 
   public static void pln(String s) {
-    System.out.println(s);
+//    System.out.println(s);
   }
 
   public static void pln(int s) {
-    System.out.println(s);
+//    System.out.println(s);
   }
 
   public static void p(String s) {
-    System.out.print(s);
+//    System.out.print(s);
   }
 
   public static void pln(boolean trumpf) {
-    System.out.println(trumpf);
+//    System.out.println(trumpf);
   }
 
 }

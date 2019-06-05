@@ -15,6 +15,7 @@ public class Start {
         Bierkopf bierkopf = new Bierkopf();
         View view = new View();
         Controller controller = new Controller(view, bierkopf);
+        controller.registerEvents();
         view.setVisible(true);
 
         bierkopf.spielen();
