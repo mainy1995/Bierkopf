@@ -6,11 +6,14 @@ import java.util.List;
 public class User extends Spieler {
 
   private HashMap<String, Boolean> farbenFreiMap;
+  private EventUserInputListener listener;
 
   public User(Bierkopf _bierkopf, List<Karte> _handkarten, String _name, int _position) {
     super(_bierkopf, _handkarten, _name, _position);
     farbenFreiMap = new HashMap<String, Boolean>();
   }
+
+
 
   // Karten mit Eingabe auswählen
   @Override
@@ -31,6 +34,17 @@ public class User extends Spieler {
 
       printAlleHandkarten();
       P.pln();
+
+      
+      
+      // Aufruf des Events -> Benachrichtigen der Bierkopf-Klasse
+      if(listener!=null){
+        listener.userLegtKarte();
+        }
+      // Hier muss noch die Synchronisation zwischen Anklicken der Karte und Speichern in "eingabe" rein
+      // ich habe bereits probiert die Eingabe über stdin mit einem '\r' oder/und ’\n' in Eingabe.readLine umzulenken
+      // das hat aber leider nicht so ganz funktioniert. Vllt findet ihr den Trick
+      
       String eingabe = Eingabe.readLine("(Ich) Ich lege die Karte: ");
 
       if (ersteKarte == null) {
@@ -91,5 +105,9 @@ public class User extends Spieler {
     Karte k = handkarten.get(index);
     removeKarte(k);
     return k;
+  }
+
+  public void setEventUserInputListener(EventUserInputListener listener){
+    this.listener=listener;
   }
 }

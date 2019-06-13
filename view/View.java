@@ -18,9 +18,11 @@ import javax.swing.JToggleButton;
 public class View extends javax.swing.JFrame {
 
     public HashMap<String, javax.swing.JToggleButton> buttonMap;
+    int kartenhoehe = 120;
+    int kartenbreite = 75;
 
     /**
-     * Creates new form View2
+    ; Creates new form View2
      */
     public View() {
         initComponents();
@@ -37,14 +39,15 @@ public class View extends javax.swing.JFrame {
         buttonMap.put(handkarten.get(4).getKarte(), handkartePos5);
         buttonMap.put(handkarten.get(5).getKarte(), handkartePos6);
 
-        gethandkartePos1().setIcon(updateCard(handkarten.get(0).getKarte()));
-        gethandkartePos2().setIcon(updateCard(handkarten.get(1).getKarte()));
-        gethandkartePos3().setIcon(updateCard(handkarten.get(2).getKarte()));
-        gethandkartePos4().setIcon(updateCard(handkarten.get(3).getKarte()));
-        gethandkartePos5().setIcon(updateCard(handkarten.get(4).getKarte()));
-        gethandkartePos6().setIcon(updateCard(handkarten.get(5).getKarte()));
-
+        gethandkartePos1().setIcon(updateCard(handkarten.get(0).getKarte(),3));
+        gethandkartePos2().setIcon(updateCard(handkarten.get(1).getKarte(),3));
+        gethandkartePos3().setIcon(updateCard(handkarten.get(2).getKarte(),3));
+        gethandkartePos4().setIcon(updateCard(handkarten.get(3).getKarte(),3));
+        gethandkartePos5().setIcon(updateCard(handkarten.get(4).getKarte(),3));
+        gethandkartePos6().setIcon(updateCard(handkarten.get(5).getKarte(),3));
     }
+
+    
 
     public JLabel getkarteUnten() {
         return karteUnten;
@@ -94,9 +97,6 @@ public class View extends javax.swing.JFrame {
         return handkartePos6;
     }
 
-    public void addSpieleKarte1Listener(ActionListener karte1) {
-        handkartePos1.addActionListener(karte1);
-    }
 
     public Image scaleImage(Image image, int w, int h) {
 
@@ -126,10 +126,10 @@ public class View extends javax.swing.JFrame {
         }
     }
 
-    public ImageIcon updateCard(String kartenname) {
+    public ImageIcon updateCard(String kartenname, int scale_factor) {
         String kartenPfad = String.format("cards/%s.png", kartenname);
         System.out.println(kartenPfad);
-        ImageIcon cardImage = createImageIcon(kartenPfad, 3);
+        ImageIcon cardImage = createImageIcon(kartenPfad, scale_factor);
         return cardImage;
     }
 
@@ -159,7 +159,7 @@ public class View extends javax.swing.JFrame {
         karteLinks = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Bandit");
+        setTitle("Bierkopf");
 
         handkartenPanel.setPreferredSize(new java.awt.Dimension(685, 250));
 
@@ -175,7 +175,7 @@ public class View extends javax.swing.JFrame {
 
         handkartePos6.setText("");
 
-        userText.setText("jLabel5");
+        userText.setText("Spieler 0 - GUI User");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -235,11 +235,11 @@ public class View extends javax.swing.JFrame {
         spieltischPanel.setLayout(new java.awt.GridBagLayout());
 
         karteUnten.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        karteUnten.setText("Karten_unten");
+        karteUnten.setText("");
         karteUnten.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        karteUnten.setMaximumSize(new java.awt.Dimension(75, 100));
-        karteUnten.setMinimumSize(new java.awt.Dimension(75, 100));
-        karteUnten.setPreferredSize(new java.awt.Dimension(75, 100));
+        karteUnten.setMaximumSize(new java.awt.Dimension(kartenbreite, kartenhoehe));
+        karteUnten.setMinimumSize(new java.awt.Dimension(kartenbreite, kartenhoehe));
+        karteUnten.setPreferredSize(new java.awt.Dimension(kartenbreite, kartenhoehe));
         karteUnten.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -247,11 +247,11 @@ public class View extends javax.swing.JFrame {
         spieltischPanel.add(karteUnten, gridBagConstraints);
 
         karteOben.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        karteOben.setText("Karte_oben");
+        karteOben.setText("");
         karteOben.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        karteOben.setMaximumSize(new java.awt.Dimension(75, 100));
-        karteOben.setMinimumSize(new java.awt.Dimension(75, 100));
-        karteOben.setPreferredSize(new java.awt.Dimension(75, 100));
+        karteOben.setMaximumSize(new java.awt.Dimension(kartenbreite, kartenhoehe));
+        karteOben.setMinimumSize(new java.awt.Dimension(kartenbreite, kartenhoehe));
+        karteOben.setPreferredSize(new java.awt.Dimension(kartenbreite, kartenhoehe));
         karteOben.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -259,11 +259,11 @@ public class View extends javax.swing.JFrame {
         spieltischPanel.add(karteOben, gridBagConstraints);
 
         karteRechts.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        karteRechts.setText("Karte_rechts");
+        karteRechts.setText("");
         karteRechts.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        karteRechts.setMaximumSize(new java.awt.Dimension(100, 75));
-        karteRechts.setMinimumSize(new java.awt.Dimension(100, 75));
-        karteRechts.setPreferredSize(new java.awt.Dimension(100, 75));
+        karteRechts.setMaximumSize(new java.awt.Dimension(kartenhoehe, kartenbreite));
+        karteRechts.setMinimumSize(new java.awt.Dimension(kartenhoehe, kartenbreite));
+        karteRechts.setPreferredSize(new java.awt.Dimension(kartenhoehe, kartenbreite));
         karteRechts.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -271,11 +271,11 @@ public class View extends javax.swing.JFrame {
         spieltischPanel.add(karteRechts, gridBagConstraints);
 
         karteLinks.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        karteLinks.setText("Karte_links");
+        karteLinks.setText("");
         karteLinks.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        karteLinks.setMaximumSize(new java.awt.Dimension(100, 75));
-        karteLinks.setMinimumSize(new java.awt.Dimension(100, 75));
-        karteLinks.setPreferredSize(new java.awt.Dimension(100, 75));
+        karteLinks.setMaximumSize(new java.awt.Dimension(kartenhoehe, kartenbreite));
+        karteLinks.setMinimumSize(new java.awt.Dimension(kartenhoehe, kartenbreite));
+        karteLinks.setPreferredSize(new java.awt.Dimension(kartenhoehe, kartenbreite));
         karteLinks.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;

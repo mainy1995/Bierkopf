@@ -3,13 +3,22 @@ package Bierkopf.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-public class Bierkopf {
+// Bierkopf muss Controller für Synchronisation kennen
+import Bierkopf.controller.Controller;
+
+public class Bierkopf implements EventUserInputListener {
 
     public List<Karte> alleKarten;
     public List<Stich> alleStiche;
     public List<Spieler> alleSpieler;
     public SpielerInformation spielerInfo;
+
+
+    private Controller controller;
+
+    
 
 //  public static void main(String[] args) {
 //    Bierkopf bierkopf = new Bierkopf();
@@ -35,13 +44,24 @@ public class Bierkopf {
         printAlleKarten();
 
         // 4 Spieler erstellen mit jeweils 6 Karten
-        alleSpieler.add(new User(this, alleKarten.subList(0, 6), "Ich", 0));
+        User user = new User(this, alleKarten.subList(0, 6), "Ich", 0);
+        alleSpieler.add(user);
         alleSpieler.add(new Spieler(this, alleKarten.subList(6, 12), "Marie", 1));
         alleSpieler.add(new Spieler(this, alleKarten.subList(12, 18), "Sepp", 2));
         alleSpieler.add(new Spieler(this, alleKarten.subList(18, 24), "Konrad", 3));
 
+        // Add Listener zum synchronisieren
+        user.setEventUserInputListener(this);
+        
+    
+
+
         P.nLines(2);
         P.pln("---------------------Spielbeginn---------------------");
+    }
+
+    public void setController(Controller controller){
+        this.controller = controller;
     }
 
     // Ausgabe aller Karten
@@ -53,15 +73,32 @@ public class Bierkopf {
 
     public void spielen() {
         int gewinner = 0;
+        Karte karte;
+        int position;
         for (int i = 0; i < 6; i++) {
             Stich liveStich = new Stich();
             for (int anfaenger = gewinner; anfaenger - gewinner < 4; anfaenger++) {
-                liveStich.zumStich(alleSpieler.get(anfaenger % 4).legeKarte(liveStich),
-                        alleSpieler.get(anfaenger % 4).position);
+                karte = alleSpieler.get(anfaenger % 4).legeKarte(liveStich);
+                position = alleSpieler.get(anfaenger % 4).position;
+                liveStich.zumStich(karte,position);
+                // EVENT, Karte eines NPCs wurde gespielt!
+                controller.updateNPCKarte(karte.getKarte(),position);
+                bedenkzeit(5000);
             }
             gewinner = liveStich.getGewinnerPosition();
             alleSpieler.get(gewinner).punkte += liveStich.getPunkte();
-            alleStiche.add(liveStich);
+            alleStiche.add(liveStich); 
+        }
+    }
+
+    // Funktion um die Bedenkzeit der Spielzüge zu simulieren; sollte für Debuging auskommentiert werden
+    void bedenkzeit(long millisekunden)
+    {
+        try {  
+            Thread.sleep(millisekunden); 
+        }
+        catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
         }
     }
 
@@ -72,4 +109,11 @@ public class Bierkopf {
             P.pln(karte.getKarte() + " " + karte.getTrumpf());
         }
     }
+
+    // Funktion wird aufgerufen, wenn EventUserInput vom User kommt
+    public void userLegtKarte(){
+        P.pln("Event detektiert. User muss Karte auswählen");
+        controller.enableInput();
+    }
+
 }

@@ -5,6 +5,10 @@ import Bierkopf.model.Bierkopf;
 import Bierkopf.view.View;
 
 /**
+ * Keine Möglichkeit zur Synchronisation zwischen Model und Controller
+ */
+
+/**
  * Builder Class
  *
  * @author alex, yannik and lorenzo
@@ -16,11 +20,12 @@ public class Start {
         View view = new View();
         Controller controller = new Controller(view, bierkopf);
         controller.registerEvents();
+        bierkopf.setController(controller);
         view.setVisible(true);
 
         bierkopf.spielen();
 
-        //controller.registerEvents();
+        
     }
 
     /**

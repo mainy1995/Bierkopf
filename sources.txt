@@ -1,0 +1,13 @@
+./Start.java
+./view/View.java
+./view/RotatedIcon.java
+./model/SpielerInformation.java
+./model/Stich.java
+./model/EventUserInputListener.java
+./model/Karte.java
+./model/Bierkopf.java
+./model/P.java
+./model/Spieler.java
+./model/User.java
+./model/Eingabe.java
+./controller/Controller.java

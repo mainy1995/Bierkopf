@@ -11,6 +11,8 @@ public class Spieler {
     protected boolean trumpfFrei, eichelFrei, blattFrei, schellenFrei;
     protected int position, punkte;
 
+
+
     public Spieler(Bierkopf _bierkopf, List<Karte> _handkarten, String _name, int _position) {
         P.pln();
         P.pln("Konstruktor: Spieler(" + _name + ")");
@@ -21,7 +23,7 @@ public class Spieler {
         bierkopf = _bierkopf;
         checkFreiheit();
         position = _position;
-        punkte = 0;
+        punkte = 0;        
 
         printAlleHandkarten();
 
@@ -131,6 +133,7 @@ public class Spieler {
 
         removeKarte(dieKarte);
         P.pln("(" + name + ") Ich lege die " + dieKarte.getKarte());
+        // Visuelles Anzeigen der Karte -> senden eines Events?
         return dieKarte;
     }
 
@@ -226,4 +229,5 @@ public class Spieler {
     public int getPunkte() {
         return punkte;
     }
+
 }
