@@ -38,14 +38,14 @@ public class User extends Spieler {
       
       
       // Aufruf des Events -> Benachrichtigen der Bierkopf-Klasse
-      if(listener!=null){
-        listener.userLegtKarte();
-        }
+     //if(listener!=null){
+        String eingabe = listener.userLegtKarte();
+       // }
       // Hier muss noch die Synchronisation zwischen Anklicken der Karte und Speichern in "eingabe" rein
       // ich habe bereits probiert die Eingabe über stdin mit einem '\r' oder/und ’\n' in Eingabe.readLine umzulenken
       // das hat aber leider nicht so ganz funktioniert. Vllt findet ihr den Trick
       
-      String eingabe = Eingabe.readLine("(Ich) Ich lege die Karte: ");
+      //String eingabe = Eingabe.readLine("(Ich) Ich lege die Karte: ");
 
       if (ersteKarte == null) {
         // spiele beliebige Karte

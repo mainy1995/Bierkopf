@@ -83,11 +83,14 @@ public class Bierkopf implements EventUserInputListener {
                 liveStich.zumStich(karte,position);
                 // EVENT, Karte eines NPCs wurde gespielt!
                 controller.updateNPCKarte(karte.getKarte(),position);
-                bedenkzeit(5000);
+                bedenkzeit(500);
             }
             gewinner = liveStich.getGewinnerPosition();
             alleSpieler.get(gewinner).punkte += liveStich.getPunkte();
             alleStiche.add(liveStich); 
+            controller.raumeTischauf();
+            controller.updateHandkarten(alleSpieler.get(0).handkarten);
+            bedenkzeit(5000);
         }
     }
 
@@ -111,9 +114,19 @@ public class Bierkopf implements EventUserInputListener {
     }
 
     // Funktion wird aufgerufen, wenn EventUserInput vom User kommt
-    public void userLegtKarte(){
+    public String userLegtKarte(){
+        String kartenname = null;
         P.pln("Event detektiert. User muss Karte auswählen");
         controller.enableInput();
+        // So lange warten, bis User einen Input liefert
+        
+        while(kartenname==null){
+            kartenname = controller.getZuSpielendeKarte();
+            // Aus irgendeinem Grund muss nächste Zeile drinnen bleiben. Ansonsten bleibt der Code in der while-Schleife hängen
+            // Meine Vermutung ist, das die Variable "kartenname" sonst wegoptimiert 
+            System.out.println(kartenname);
+        }
+        return kartenname;
     }
 
 }

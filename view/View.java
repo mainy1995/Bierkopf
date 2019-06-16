@@ -31,7 +31,7 @@ public class View extends javax.swing.JFrame {
 //        update();
     }
 
-    public void updateHandkarten(List<Karte> handkarten) {
+    public void initializeHandkarten(List<Karte> handkarten) {
         buttonMap.put(handkarten.get(0).getKarte(), handkartePos1);
         buttonMap.put(handkarten.get(1).getKarte(), handkartePos2);
         buttonMap.put(handkarten.get(2).getKarte(), handkartePos3);
@@ -128,7 +128,7 @@ public class View extends javax.swing.JFrame {
 
     public ImageIcon updateCard(String kartenname, int scale_factor) {
         String kartenPfad = String.format("cards/%s.png", kartenname);
-        System.out.println(kartenPfad);
+       // System.out.println(kartenPfad);
         ImageIcon cardImage = createImageIcon(kartenPfad, scale_factor);
         return cardImage;
     }

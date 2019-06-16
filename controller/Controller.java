@@ -16,19 +16,32 @@ public class Controller implements ActionListener {
 
     private View view;
     private Bierkopf bierkopf;
+    private String zuSpielendeKarte = null;
+
 
     public Controller(View view, Bierkopf bierkopf) {
 
         this.view = view;
         this.bierkopf = bierkopf;
-        getHandKarten();
+        view.initializeHandkarten(bierkopf.alleSpieler.get(0).handkarten);
         disableInput();
     }
+
+    private void setZuSpielendeKarte(String s)
+    {
+        zuSpielendeKarte = s;
+    } 
+
+    public String getZuSpielendeKarte()
+    {
+        return zuSpielendeKarte;
+    } 
 
     public void disableInput(){
         view.buttonMap.forEach((key,value) -> {
             view.buttonMap.get(key).setEnabled(false);
         }); 
+        zuSpielendeKarte = null;
     }
 
     public void enableInput(){
@@ -37,8 +50,10 @@ public class Controller implements ActionListener {
         }); 
     }
 
-    public void getHandKarten() {
-        view.updateHandkarten(bierkopf.alleSpieler.get(0).handkarten);
+    public void updateHandkarten(List<Karte> handkarten) {
+        for(Karte karte : handkarten){
+            System.out.println(karte.getKarte());
+        }
     }
 
     public void registerEvents() {
@@ -55,10 +70,17 @@ public class Controller implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent evt) {
         Object src = evt.getSource();
-        String zuSpielendeKarte = "";
 
         if (src == view.gethandkartePos1()) {
-            zuSpielendeKarte = bierkopf.alleSpieler.get(0).handkarten.get(0).getKarte();
+            setZuSpielendeKarte(bierkopf.alleSpieler.get(0).handkarten.get(0).getKarte());
+            // jbutton kann aus der Hand entfernt werden. Problem hierbei: Array Indexe wandern immer eins runter
+            // heißt wenn erste Karte entfernt wird, dann muss die hinterste Karte entfernt werden:
+            // Information über "hinterste Karte" -> Rundenzähler?
+            view.gethandkartenPanel().remove(view.gethandkartePos1());
+           // view.getContentPane().remove(view.gethandkartePos1());
+            view.getContentPane().validate();
+            view.getContentPane().repaint();
+            //view.getContentPane()
         } else if (src == view.gethandkartePos2()) {
             zuSpielendeKarte = bierkopf.alleSpieler.get(0).handkarten.get(1).getKarte();
         } else if (src == view.gethandkartePos3()) {
@@ -72,17 +94,28 @@ public class Controller implements ActionListener {
         }
 
         view.getkarteUnten().setIcon(view.updateCard(zuSpielendeKarte,5));
-        
+        view.getkarteUnten().setVisible(true);
+        disableInput();
     }
 
 
     public void updateNPCKarte(String kartenname,int position){
         if (position == 1){
             view.getkarteLinks().setIcon(view.rotateIcon(view.updateCard(kartenname,5)));
+            view.getkarteLinks().setVisible(true);
         } else if (position == 2) {
             view.getkarteOben().setIcon(view.updateCard(kartenname,5));
+            view.getkarteOben().setVisible(true);
         } else if (position == 3){
             view.getkarteRechts().setIcon(view.rotateIcon(view.updateCard(kartenname,5)));
+            view.getkarteRechts().setVisible(true);
         }
+    }
+
+    public void raumeTischauf(){
+        view.getkarteLinks().setVisible(false);
+        view.getkarteUnten().setVisible(false);
+        view.getkarteOben().setVisible(false);
+        view.getkarteRechts().setVisible(false);
     }
 }
