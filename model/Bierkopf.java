@@ -3,7 +3,6 @@ package Bierkopf.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 // Bierkopf muss Controller für Synchronisation kennen
 import Bierkopf.controller.Controller;
@@ -23,9 +22,9 @@ public class Bierkopf implements EventUserInputListener {
 //  }
     public Bierkopf() {
         P.pln("Konstruktor: Bierkopf()");
-        alleStiche = new ArrayList<Stich>();
-        alleKarten = new ArrayList<Karte>();
-        alleSpieler = new ArrayList<Spieler>();
+        alleStiche = new ArrayList<>();
+        alleKarten = new ArrayList<>();
+        alleSpieler = new ArrayList<>();
         spielerInfo = new SpielerInformation();
 
         // initialisiere alle Karten
@@ -87,6 +86,7 @@ public class Bierkopf implements EventUserInputListener {
             // Wegräumen der Stiche sowie Refresh der Spieler-Handkarten
             controller.raumeTischauf();
             controller.updateHandkarten(alleSpieler.get(0).handkarten);
+            bedenkzeit(1500);
         }
         controller.setUserText(ermittleGewinner());
 
@@ -94,11 +94,17 @@ public class Bierkopf implements EventUserInputListener {
 
     private String ermittleGewinner() {
         int punktanzahl = alleSpieler.get(0).punkte + alleSpieler.get(2).punkte;
+        StringBuilder builder = new StringBuilder();
+
         if (punktanzahl >= 60) {
-            return "Eigenes Team hat gewonnen mit " + punktanzahl + " Punkten";
+            builder.append("Eigenes Team hat gewonnen mit " + punktanzahl + " Punkten");
         } else {
-            return "Anderes Team hat gewonnen mit " + (120 - punktanzahl) + " Punkten";
+            builder.append("Anderes Team hat gewonnen mit " + (120 - punktanzahl) + " Punkten");
         }
+
+        P.pln();
+        P.pln(builder.toString());
+        return builder.toString();
     }
 
     // Funktion um die Bedenkzeit der Spielzüge zu simulieren; sollte für Debuging auskommentiert werden
@@ -107,14 +113,6 @@ public class Bierkopf implements EventUserInputListener {
             Thread.sleep(millisekunden);
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
-        }
-    }
-
-    // Ausgabe eines Kartenbereiches mit String
-    public void printKarten(Karte[] karten, String title) {
-        P.pln(title);
-        for (Karte karte : karten) {
-            P.pln(karte.getKarte() + " " + karte.getTrumpf());
         }
     }
 

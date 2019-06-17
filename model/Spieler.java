@@ -10,27 +10,26 @@ public class Spieler {
     protected Bierkopf bierkopf;
     protected boolean trumpfFrei, eichelFrei, blattFrei, schellenFrei;
     protected int position, punkte;
-
-
+    private Stich liveStich;
 
     public Spieler(Bierkopf _bierkopf, List<Karte> _handkarten, String _name, int _position) {
         P.pln();
         P.pln("Konstruktor: Spieler(" + _name + ")");
 
         name = _name;
-        handkarten = new ArrayList<Karte>();
+        handkarten = new ArrayList<>();
         handkarten.addAll(_handkarten);
         bierkopf = _bierkopf;
         checkFreiheit();
         position = _position;
-        punkte = 0;        
+        punkte = 0;
 
         printAlleHandkarten();
 
     }
 
     // eigene Handkarten auf "Freiheit" überprüfen
-    protected void checkFreiheit() {
+    protected final void checkFreiheit() {
         trumpfFrei = eichelFrei = blattFrei = schellenFrei = true;
 
         for (Karte karte : handkarten) {
@@ -53,7 +52,7 @@ public class Spieler {
     }
 
     // Ausgabe aller Handkarten
-    public void printAlleHandkarten() {
+    public final void printAlleHandkarten() {
         P.pln("(" + name + ") Meine Karten sind:");
         for (Karte karte : handkarten) {
             P.pln(karte.getKarte());
@@ -78,63 +77,67 @@ public class Spieler {
         P.pln(".");
     }
 
-    public Karte legeKarte(Stich liveStich) {
+    public Karte legeKarte(Stich _liveStich) {
+        liveStich = _liveStich;
         P.pln();
         P.pln("(" + name + ") Ich bin am Zug.");
-        Karte ersteKarte = liveStich.ersteKarte();
-        Karte dieKarte = null;
+        Karte ersteKarte = _liveStich.ersteKarte();
         checkFreiheit();
 
-        // nicht rauskommen - also die erste Karte im Stich existiert
-        if (ersteKarte != null) {
-            // Trumpf ist gespielt
-            if (ersteKarte.getTrumpf()) {
-                if (trumpfFrei) {
-                    // ich habe keinen Trumpf
-                    bierkopf.spielerInfo.trumpfFrei[position] = true;
-                    dieKarte = kamikazeFunktion();
-                } else {
-                    // ich gebe Trumpf zu
-                    dieKarte = farbeZugeben(ersteKarte, true);
-                }
-            } // eine Farbe ist gepielt
-            else if (ersteKarte.getFarbe() == "E") {
-                if (eichelFrei) {
-                    // ich habe keine Eichel
-                    bierkopf.spielerInfo.eichelFrei[position] = true;
-                    dieKarte = kamikazeFunktion();
-                } else {
-                    // ich gebe Eichel zu
-                    dieKarte = farbeZugeben(ersteKarte, false);
-                }
-            } else if (ersteKarte.getFarbe() == "B") {
-                if (blattFrei) {
-                    // ich habe keinen Blatt
-                    bierkopf.spielerInfo.blattFrei[position] = true;
-                    dieKarte = kamikazeFunktion();
-                } else {
-                    // ich gebe Blatt zu
-                    dieKarte = farbeZugeben(ersteKarte, false);
-                }
-            } else if (ersteKarte.getFarbe() == "S") {
-                if (schellenFrei) {
-                    // ich habe keinen Schellen
-                    bierkopf.spielerInfo.schellenFrei[position] = true;
-                    dieKarte = kamikazeFunktion();
-                } else {
-                    // ich gebe Schellen zu
-                    dieKarte = farbeZugeben(ersteKarte, false);
-                }
+        List<Karte> moeglicheKarten = moeglicheKarten();
+        Karte dieKarte = moeglicheKarten.get(0);
+
+        P.p("moegliche Karten: ");
+        for (Karte m : moeglicheKarten) {
+            P.p(m.getKarte() + ",");
+        }
+        P.pln();
+
+        // waehle immer die hoechstmoegliche Karte
+        for (Karte m : moeglicheKarten) {
+            if (isthoechsteKarte(m, dieKarte)) {
+                dieKarte = m;
             }
-        } // ich komme raus
-        else {
-            dieKarte = kamikazeFunktion();
         }
 
         removeKarte(dieKarte);
         P.pln("(" + name + ") Ich lege die " + dieKarte.getKarte());
-        // Visuelles Anzeigen der Karte -> senden eines Events?
+
         return dieKarte;
+    }
+
+    public boolean isthoechsteKarte(Karte kandidat, Karte hoechsteKarte) {
+        if (hoechsteKarte.getTrumpf()) {
+            if (kandidat.getTrumpf()) {
+                // Trümpfe miteinander vergleichen
+                int i = kandidat.zahl.compareTo(hoechsteKarte.zahl); // positiv, falls größer
+                if (i > 0) {
+                    return true;
+                } // Farbvergleich nötig für Ober und Unter
+                else if (i == 0) {
+                    int j = kandidat.farbe.compareTo(hoechsteKarte.farbe);
+                    if (j > 0) {
+                        return true;
+                    }
+                }
+            }
+        } // hoechste Karte ist nicht Trumpf
+        else // mit Trumpf stechen
+         if (kandidat.getTrumpf()) {
+                return true;
+            } // gelegte Karte ist auch kein Trumpf
+            else {
+                // Farbvergleich
+                int i = kandidat.farbe.compareTo(hoechsteKarte.farbe);
+                if (i == 0) {
+                    int j = kandidat.zahl.compareTo(hoechsteKarte.zahl);
+                    if (j > 0) {
+                        return true;
+                    }
+                }
+            }
+        // Ansonsten
+        return false;
     }
 
     protected void removeKarte(Karte karte) {
@@ -145,81 +148,39 @@ public class Spieler {
         }
     }
 
-    // irgendwie Baum aufbauen und beste Karte für den Stich wählen
-    private Karte kamikazeFunktion() {
-        Karte k = null;
-        // TODO Drachen bezwingen
-        // die nachfolgende Zeile ist FALSCH
-        k = handkarten.get(0);
-        return k;
-    }
+    private List<Karte> moeglicheKarten() {
+        Karte ersteKarte = liveStich.ersteKarte();
+        List<Karte> moeglicheKarten = new ArrayList<>();
 
-    // Farbe oder Trumpf bekennen
-    // und bei mehreren passenden Handkarten weise auswählen
-    private Karte farbeZugeben(Karte ersteKarte, boolean trumpf) {
-        Karte dieKarte = null;
-        List<Integer> indizes = new ArrayList<Integer>();
+        if (ersteKarte == null) {
+            return handkarten;
+        }
 
-        int anzahlKarten = 0;
-        if (!trumpf) {
-            for (Karte karte : handkarten) {
-                if (!karte.getTrumpf() && karte.getFarbe().contentEquals(ersteKarte.getFarbe())) {
-                    anzahlKarten++;
-                    indizes.add(handkarten.indexOf(karte));
-                }
-            }
-            if (anzahlKarten == 1) {
-                dieKarte = handkarten.get(indizes.get(0));
-            } else {
-                // TODO weise Wählen
-                // die nachfolgende Zeile ist FALSCH
-                dieKarte = handkarten.get(indizes.get(0));
-            }
-        } // trumpf
-        else {
+        // trumpf
+        if (ersteKarte.getTrumpf()) {
             for (Karte karte : handkarten) {
                 if (karte.getTrumpf()) {
-                    anzahlKarten++;
-                    indizes.add(handkarten.indexOf(karte));
+                    moeglicheKarten.add(karte);
                 }
             }
-            if (anzahlKarten == 1) {
-                dieKarte = handkarten.get(indizes.get(0));
-            } else {
-                // TODO weise Wählen
-                // die nachfolgende Zeile ist FALSCH
-                dieKarte = handkarten.get(indizes.get(0));
+
+            if (moeglicheKarten.isEmpty()) {
+                bierkopf.spielerInfo.trumpfFrei[position] = true;
             }
-        }
-        return dieKarte;
-    }
-
-    // alle möglichen Kombinationen eines Stichs auszugeben (verbessert)
-    // 4 Karten werden in den Stich gelegt (KI beginnt)
-    public void printKombinations4() {
-        P.pln("(" + name + ") Alle Kartenkombinationen, die folgen können sind:");
-
-        int i = 0;
-        for (Karte k1 : handkarten)// erste Karte ist eine Handkarte
-        {
-            for (Karte k2 : bierkopf.alleKarten) {
-                if (!handkarten.contains(k2))// nachfolgenden Karten sind nicht auf der Hand
-                {
-                    for (Karte k3 : bierkopf.alleKarten) {
-                        if (!(handkarten.contains(k3) || k2.equals(k3))) {
-                            for (Karte k4 : bierkopf.alleKarten) {
-                                if (!(handkarten.contains(k4) || k2.equals(k4) || k3.equals(k4))) {
-                                    P.pln(k1.getKarte() + " " + k2.getKarte() + " " + k3.getKarte() + " " + k4.getKarte());
-                                    i++;
-                                }
-                            }
-                        }
-                    }
+        } // Farbe
+        else {
+            for (Karte karte : handkarten) {
+                if (!karte.getTrumpf() && karte.getFarbe().contentEquals(ersteKarte.getFarbe())) {
+                    moeglicheKarten.add(karte);
                 }
             }
         }
 
-        P.pln("Es sind noch " + i + " Kartenkombinationen im Spiel.");
+        if (moeglicheKarten.isEmpty()) {
+            return handkarten;
+        } else {
+            return moeglicheKarten;
+        }
     }
 
     public int getPosition() {
