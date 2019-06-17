@@ -108,6 +108,12 @@ public class View extends javax.swing.JFrame {
         return handkartePos6;
     }
 
+    public JLabel getUserText(){
+        return userText;
+    }
+
+
+
 
     public Image scaleImage(Image image, int w, int h) {
 

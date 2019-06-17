@@ -39,7 +39,7 @@ public class User extends Spieler {
       
       // Aufruf des Events -> Benachrichtigen der Bierkopf-Klasse
      //if(listener!=null){
-        String eingabe = listener.userLegtKarte();
+    String eingabe = listener.userLegtKarte();
        // }
       // Hier muss noch die Synchronisation zwischen Anklicken der Karte und Speichern in "eingabe" rein
       // ich habe bereits probiert die Eingabe über stdin mit einem '\r' oder/und ’\n' in Eingabe.readLine umzulenken

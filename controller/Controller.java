@@ -56,6 +56,10 @@ public class Controller implements ActionListener {
         }
     }
 
+    public void setUserText(String s){
+        view.getUserText().setText(s);
+    }
+
     public void registerEvents() {
         view.gethandkartePos1().addActionListener(this);
         view.gethandkartePos2().addActionListener(this);
@@ -72,16 +76,8 @@ public class Controller implements ActionListener {
         Object src = evt.getSource();
 
         if (src == view.gethandkartePos1()) {
-           // setZuSpielendeKarte(bierkopf.alleSpieler.get(0).handkarten.get(0).getKarte());
             setZuSpielendeKarte(view.handkartenMap.get(view.gethandkartePos1()));
-            // jbutton kann aus der Hand entfernt werden. Problem hierbei: Array Indexe wandern immer eins runter
-            // heißt wenn erste Karte entfernt wird, dann muss die hinterste Karte entfernt werden:
-            // Information über "hinterste Karte" -> Rundenzähler?
             view.gethandkartenPanel().remove(view.gethandkartePos1());
-           // view.getContentPane().remove(view.gethandkartePos1());
-            view.getContentPane().validate();
-            view.getContentPane().repaint();
-            //view.getContentPane()
         } else if (src == view.gethandkartePos2()) {
             zuSpielendeKarte = view.handkartenMap.get(view.gethandkartePos2());
             view.gethandkartenPanel().remove(view.gethandkartePos2());

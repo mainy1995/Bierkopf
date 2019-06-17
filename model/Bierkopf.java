@@ -79,6 +79,7 @@ public class Bierkopf implements EventUserInputListener {
             Stich liveStich = new Stich();
             for (int anfaenger = gewinner; anfaenger - gewinner < 4; anfaenger++) {
                 karte = alleSpieler.get(anfaenger % 4).legeKarte(liveStich);
+                // Überprüfung ob Karte legitim war
                 position = alleSpieler.get(anfaenger % 4).position;
                 liveStich.zumStich(karte,position);
                 // EVENT, Karte eines NPCs wurde gespielt!
@@ -88,9 +89,24 @@ public class Bierkopf implements EventUserInputListener {
             gewinner = liveStich.getGewinnerPosition();
             alleSpieler.get(gewinner).punkte += liveStich.getPunkte();
             alleStiche.add(liveStich); 
+
+            // Wegräumen der Stiche sowie Refresh der Spieler-Handkarten
             controller.raumeTischauf();
             controller.updateHandkarten(alleSpieler.get(0).handkarten);
-            bedenkzeit(5000);
+        }
+        controller.setUserText(ermittleGewinner());
+
+        
+
+    }
+
+    private String ermittleGewinner(){
+        int punktanzahl = alleSpieler.get(0).punkte + alleSpieler.get(2).punkte; 
+        if(punktanzahl>=60){
+            return "Eigenes Team hat gewonnen mit " + punktanzahl + " Punkten";
+        }
+        else {
+            return "Anderes Team hat gewonnen mit " + (120 - punktanzahl) + " Punkten";
         }
     }
 
@@ -126,6 +142,7 @@ public class Bierkopf implements EventUserInputListener {
             // Meine Vermutung ist, das die Variable "kartenname" sonst wegoptimiert 
             System.out.println(kartenname);
         }
+        System.out.println(kartenname);
         return kartenname;
     }
 
