@@ -72,7 +72,8 @@ public class Controller implements ActionListener {
         Object src = evt.getSource();
 
         if (src == view.gethandkartePos1()) {
-            setZuSpielendeKarte(bierkopf.alleSpieler.get(0).handkarten.get(0).getKarte());
+           // setZuSpielendeKarte(bierkopf.alleSpieler.get(0).handkarten.get(0).getKarte());
+            setZuSpielendeKarte(view.handkartenMap.get(view.gethandkartePos1()));
             // jbutton kann aus der Hand entfernt werden. Problem hierbei: Array Indexe wandern immer eins runter
             // heißt wenn erste Karte entfernt wird, dann muss die hinterste Karte entfernt werden:
             // Information über "hinterste Karte" -> Rundenzähler?
@@ -82,16 +83,24 @@ public class Controller implements ActionListener {
             view.getContentPane().repaint();
             //view.getContentPane()
         } else if (src == view.gethandkartePos2()) {
-            zuSpielendeKarte = bierkopf.alleSpieler.get(0).handkarten.get(1).getKarte();
+            zuSpielendeKarte = view.handkartenMap.get(view.gethandkartePos2());
+            view.gethandkartenPanel().remove(view.gethandkartePos2());
         } else if (src == view.gethandkartePos3()) {
-            zuSpielendeKarte = bierkopf.alleSpieler.get(0).handkarten.get(2).getKarte();
+            zuSpielendeKarte = view.handkartenMap.get(view.gethandkartePos3());
+            view.gethandkartenPanel().remove(view.gethandkartePos3());
         } else if (src == view.gethandkartePos4()) {
-            zuSpielendeKarte = bierkopf.alleSpieler.get(0).handkarten.get(3).getKarte();
+            zuSpielendeKarte = view.handkartenMap.get(view.gethandkartePos4());
+            view.gethandkartenPanel().remove(view.gethandkartePos4());
         } else if (src == view.gethandkartePos5()) {
-            zuSpielendeKarte = bierkopf.alleSpieler.get(0).handkarten.get(4).getKarte();
+            zuSpielendeKarte = view.handkartenMap.get(view.gethandkartePos5());
+            view.gethandkartenPanel().remove(view.gethandkartePos5());
         } else if (src == view.gethandkartePos6()) {
-            zuSpielendeKarte = bierkopf.alleSpieler.get(0).handkarten.get(5).getKarte();
+            zuSpielendeKarte = view.handkartenMap.get(view.gethandkartePos6());
+            view.gethandkartenPanel().remove(view.gethandkartePos6());
         }
+
+        view.getContentPane().validate();
+        view.getContentPane().repaint();
 
         view.getkarteUnten().setIcon(view.updateCard(zuSpielendeKarte,5));
         view.getkarteUnten().setVisible(true);

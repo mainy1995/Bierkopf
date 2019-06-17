@@ -18,6 +18,7 @@ import javax.swing.JToggleButton;
 public class View extends javax.swing.JFrame {
 
     public HashMap<String, javax.swing.JToggleButton> buttonMap;
+    public HashMap<javax.swing.JToggleButton, String> handkartenMap;
     int kartenhoehe = 120;
     int kartenbreite = 75;
 
@@ -27,6 +28,7 @@ public class View extends javax.swing.JFrame {
     public View() {
         initComponents();
         buttonMap = new HashMap<String, javax.swing.JToggleButton>();
+        handkartenMap = new HashMap<javax.swing.JToggleButton, String>();
 
 //        update();
     }
@@ -38,6 +40,15 @@ public class View extends javax.swing.JFrame {
         buttonMap.put(handkarten.get(3).getKarte(), handkartePos4);
         buttonMap.put(handkarten.get(4).getKarte(), handkartePos5);
         buttonMap.put(handkarten.get(5).getKarte(), handkartePos6);
+
+        handkartenMap.put(handkartePos1, handkarten.get(0).getKarte());
+        handkartenMap.put(handkartePos2, handkarten.get(1).getKarte());
+        handkartenMap.put(handkartePos3, handkarten.get(2).getKarte());
+        handkartenMap.put(handkartePos4, handkarten.get(3).getKarte());
+        handkartenMap.put(handkartePos5, handkarten.get(4).getKarte());
+        handkartenMap.put(handkartePos6, handkarten.get(5).getKarte());
+
+
 
         gethandkartePos1().setIcon(updateCard(handkarten.get(0).getKarte(),3));
         gethandkartePos2().setIcon(updateCard(handkarten.get(1).getKarte(),3));
