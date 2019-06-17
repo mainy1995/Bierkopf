@@ -94,15 +94,21 @@ public class Controller implements ActionListener {
 
 
     public void updateNPCKarte(String kartenname,int position){
-        if (position == 1){
-            view.getkarteLinks().setIcon(view.rotateIcon(view.updateCard(kartenname,5)));
-            view.getkarteLinks().setVisible(true);
-        } else if (position == 2) {
-            view.getkarteOben().setIcon(view.updateCard(kartenname,5));
-            view.getkarteOben().setVisible(true);
-        } else if (position == 3){
-            view.getkarteRechts().setIcon(view.rotateIcon(view.updateCard(kartenname,5)));
-            view.getkarteRechts().setVisible(true);
+        switch (position) {
+            case 1:
+                view.getkarteLinks().setIcon(view.rotateIcon(view.updateCard(kartenname,5)));
+                view.getkarteLinks().setVisible(true);
+                break;
+            case 2:
+                view.getkarteOben().setIcon(view.updateCard(kartenname,5));
+                view.getkarteOben().setVisible(true);
+                break;
+            case 3:
+                view.getkarteRechts().setIcon(view.rotateIcon(view.updateCard(kartenname,5)));
+                view.getkarteRechts().setVisible(true);
+                break;
+            default:
+                break;
         }
     }
 

@@ -15,10 +15,7 @@ public class Bierkopf implements EventUserInputListener {
     public List<Spieler> alleSpieler;
     public SpielerInformation spielerInfo;
 
-
     public Controller controller;
-
-    
 
 //  public static void main(String[] args) {
 //    Bierkopf bierkopf = new Bierkopf();
@@ -52,15 +49,12 @@ public class Bierkopf implements EventUserInputListener {
 
         // Add Listener zum synchronisieren
         user.setEventUserInputListener(this);
-        
-    
-
 
         P.nLines(2);
         P.pln("---------------------Spielbeginn---------------------");
     }
 
-    public void setController(Controller controller){
+    public void setController(Controller controller) {
         this.controller = controller;
     }
 
@@ -81,14 +75,14 @@ public class Bierkopf implements EventUserInputListener {
                 karte = alleSpieler.get(anfaenger % 4).legeKarte(liveStich);
                 // Überprüfung ob Karte legitim war
                 position = alleSpieler.get(anfaenger % 4).position;
-                liveStich.zumStich(karte,position);
+                liveStich.zumStich(karte, position);
                 // EVENT, Karte eines NPCs wurde gespielt!
-                controller.updateNPCKarte(karte.getKarte(),position);
+                controller.updateNPCKarte(karte.getKarte(), position);
                 bedenkzeit(500);
             }
             gewinner = liveStich.getGewinnerPosition();
             alleSpieler.get(gewinner).punkte += liveStich.getPunkte();
-            alleStiche.add(liveStich); 
+            alleStiche.add(liveStich);
 
             // Wegräumen der Stiche sowie Refresh der Spieler-Handkarten
             controller.raumeTischauf();
@@ -96,27 +90,22 @@ public class Bierkopf implements EventUserInputListener {
         }
         controller.setUserText(ermittleGewinner());
 
-        
-
     }
 
-    private String ermittleGewinner(){
-        int punktanzahl = alleSpieler.get(0).punkte + alleSpieler.get(2).punkte; 
-        if(punktanzahl>=60){
+    private String ermittleGewinner() {
+        int punktanzahl = alleSpieler.get(0).punkte + alleSpieler.get(2).punkte;
+        if (punktanzahl >= 60) {
             return "Eigenes Team hat gewonnen mit " + punktanzahl + " Punkten";
-        }
-        else {
+        } else {
             return "Anderes Team hat gewonnen mit " + (120 - punktanzahl) + " Punkten";
         }
     }
 
     // Funktion um die Bedenkzeit der Spielzüge zu simulieren; sollte für Debuging auskommentiert werden
-    void bedenkzeit(long millisekunden)
-    {
-        try {  
-            Thread.sleep(millisekunden); 
-        }
-        catch(InterruptedException ex) {
+    void bedenkzeit(long millisekunden) {
+        try {
+            Thread.sleep(millisekunden);
+        } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
     }
@@ -130,17 +119,20 @@ public class Bierkopf implements EventUserInputListener {
     }
 
     // Funktion wird aufgerufen, wenn EventUserInput vom User kommt
-    public String userLegtKarte(){
+    public String userLegtKarte() {
         String kartenname = null;
         P.pln("Event detektiert. User muss Karte auswählen");
         controller.enableInput();
         // So lange warten, bis User einen Input liefert
-        
-        while(kartenname==null){
+
+        while (kartenname == null) {
             kartenname = controller.getZuSpielendeKarte();
-            // Aus irgendeinem Grund muss nächste Zeile drinnen bleiben. Ansonsten bleibt der Code in der while-Schleife hängen
-            // Meine Vermutung ist, das die Variable "kartenname" sonst wegoptimiert 
-            System.out.println(kartenname);
+
+            if (kartenname == null) {
+                System.out.print("");
+            } else {
+                System.out.println(kartenname);
+            }
         }
         return kartenname;
     }
