@@ -66,7 +66,7 @@ public class User extends Spieler {
             if (eingabe.contentEquals(k.getKarte())) {
               // ausgewählte Karte ist nicht Trumpf und ich könnte Trumpf spielen
               if (!k.getTrumpf() && !trumpfFrei)
-                P.pln("Trumpf muss zugegeben werden!");
+              bierkopf.controller.setUserText("Trumpf muss zugegeben werden!");
               else {
                 if (trumpfFrei)
                   bierkopf.spielerInfo.trumpfFrei[0] = true;
@@ -86,7 +86,7 @@ public class User extends Spieler {
             if (eingabe.contentEquals(k.getKarte())) {
               // ausgewählte Karte ist unterschiedliche Farbe und ich könnte zugeben
               if (!k.getFarbe().contentEquals(farbe) && !farbenFreiMap.get(farbe))
-                P.pln("Die Farbe " + farbe + " muss zugegeben werden");
+              bierkopf.controller.setUserText("Die Farbe " + farbe + " muss zugegeben werden");
               else {
                 if (farbenFreiMap.get(farbe))
                   bierkopf.spielerInfo.setUserFarbe(farbe);
@@ -103,7 +103,10 @@ public class User extends Spieler {
     } while (!karteVorhanden);
 
     Karte k = handkarten.get(index);
+    bierkopf.controller.removeKarte(k.getKarte());
+
     removeKarte(k);
+    // remove button as well
     return k;
   }
 

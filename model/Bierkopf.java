@@ -16,7 +16,7 @@ public class Bierkopf implements EventUserInputListener {
     public SpielerInformation spielerInfo;
 
 
-    private Controller controller;
+    public Controller controller;
 
     
 
@@ -142,7 +142,6 @@ public class Bierkopf implements EventUserInputListener {
             // Meine Vermutung ist, das die Variable "kartenname" sonst wegoptimiert 
             System.out.println(kartenname);
         }
-        System.out.println(kartenname);
         return kartenname;
     }
 

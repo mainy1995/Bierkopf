@@ -77,29 +77,18 @@ public class Controller implements ActionListener {
 
         if (src == view.gethandkartePos1()) {
             setZuSpielendeKarte(view.handkartenMap.get(view.gethandkartePos1()));
-            view.gethandkartenPanel().remove(view.gethandkartePos1());
         } else if (src == view.gethandkartePos2()) {
             zuSpielendeKarte = view.handkartenMap.get(view.gethandkartePos2());
-            view.gethandkartenPanel().remove(view.gethandkartePos2());
         } else if (src == view.gethandkartePos3()) {
             zuSpielendeKarte = view.handkartenMap.get(view.gethandkartePos3());
-            view.gethandkartenPanel().remove(view.gethandkartePos3());
         } else if (src == view.gethandkartePos4()) {
             zuSpielendeKarte = view.handkartenMap.get(view.gethandkartePos4());
-            view.gethandkartenPanel().remove(view.gethandkartePos4());
         } else if (src == view.gethandkartePos5()) {
             zuSpielendeKarte = view.handkartenMap.get(view.gethandkartePos5());
-            view.gethandkartenPanel().remove(view.gethandkartePos5());
         } else if (src == view.gethandkartePos6()) {
             zuSpielendeKarte = view.handkartenMap.get(view.gethandkartePos6());
-            view.gethandkartenPanel().remove(view.gethandkartePos6());
         }
 
-        view.getContentPane().validate();
-        view.getContentPane().repaint();
-
-        view.getkarteUnten().setIcon(view.updateCard(zuSpielendeKarte,5));
-        view.getkarteUnten().setVisible(true);
         disableInput();
     }
 
@@ -116,6 +105,16 @@ public class Controller implements ActionListener {
             view.getkarteRechts().setVisible(true);
         }
     }
+
+    public void removeKarte(String s){
+        view.getkarteUnten().setIcon(view.updateCard(zuSpielendeKarte,5));
+        view.getkarteUnten().setVisible(true);
+        view.gethandkartenPanel().remove(view.buttonMap.get(s));
+        view.getContentPane().validate();
+        view.getContentPane().repaint();
+        view.getkarteUnten().setVisible(true);
+    }
+
 
     public void raumeTischauf(){
         view.getkarteLinks().setVisible(false);

@@ -34,6 +34,16 @@ public class Start {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new Start();
+        for (int i = 0; i < 10; i++) {
+            new Start();
+
+            try {  
+                Thread.sleep(5000); 
+            }
+            catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+        }
+
     }
 }
