@@ -125,12 +125,7 @@ public class Bierkopf implements EventUserInputListener {
 
         while (kartenname == null) {
             kartenname = controller.getZuSpielendeKarte();
-
-            if (kartenname == null) {
-                System.out.print("");
-            } else {
-                System.out.println(kartenname);
-            }
+            System.out.print("");
         }
         return kartenname;
     }
